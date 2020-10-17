@@ -2,8 +2,7 @@
 Для получения кода нужно выполнить команду: <br />
 ```
 git clone https://github.com/ivovtin/cosmicMuons
-
-``
+```
 
 Данный пакет зависит от [KaFramework](https://github.com/ivovtin/KaFramework) и пакетов реконструкции указанных в Makefile.<br />
 
