@@ -1,24 +1,35 @@
-# The code for analysis cosmic events
-Get the code: <br />
+# Пакет для анализа космических событий зарегистрированных в системе АЧС
+Для получения кода нужно выполнить команду: <br />
 ```
 git clone https://github.com/ivovtin/cosmicMuons
+
+``
+
+Данный пакет зависит от [KaFramework](https://github.com/ivovtin/KaFramework) и пакетов реконструкции указанных в Makefile.<br />
+
+Для сборки нужно сделать make в диретории с пакетом<br />
+
+Для перекачки сырых данных в root-файл необходимо на batch запустить программу с помощью следующей команды:
 ```
-Example for run: <br />
-```
-analysis_cosmic -x /space/runs/daq025676.nat.bz2    - with KDisplay <br />
-analysis_cosmic -x -v 19862 /spool/users/ovtin/sim000010.dat - run simulation with number calibration <br />
-```
-For run on batch need use next line:
-```
-bsub batch_dataatc_cosm.sh
-bsub batch_mcatc_cosm.sh  - for MC
+qsub batch_dataatc_cosm.sh
 ```
 
-Launch KDisplay for view event with reconstruction: <br />
+Прежде нужно расскоментировать обрабатываемые файлы или добавить их, и указать верно выходные пути! <br />
+
+После получения root-файлов переходим в директорию cosmic, где для сборки делаем make <br />
+
+В файле cosmic.C перед сборкой необходимо указать верные выходные пути <br />
+
+Для запуска на batch выполнить команду:
+```
+qsub batch_cosm.sh
+```
+
+Результирующие картинки лежат здесь http://kedr.inp.nsk.su/~ovtin/cosmic/
+
+Другие полезные команды для просмотра событий:
 ```
 bzcat /space/runs/daq021913.nat.bz2 | KDisplay -r -e3197
-```
-Launch simulation in KDisplay: <br />
-```
+
 /home/ovtin/development/bin/KDisplay < /spool/users/ovtin/sim000004.dat -r -R22996
 ```
