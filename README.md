@@ -34,6 +34,8 @@ qsub batch_kp_cosm.sh
 ```
 Предварительно не забыть поменять пути к выходным директориям.
 
+Результирующие картинки лежат здесь http://kedr.inp.nsk.su/~ovtin/kp_identification/
+
 Другие полезные команды для просмотра событий:
 ```
 bzcat /space/runs/daq021913.nat.bz2 | KDisplay -r -e3197
