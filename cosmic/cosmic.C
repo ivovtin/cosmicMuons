@@ -28,11 +28,11 @@ int main(int argc, char* argv[])
     bool verbose=0;
 
     //***************preselections*************
-    int min_munhits=2;
+    int min_munhits=3;
     float min_p=1000.; //MeV
     float max_p=10000.; //MeV
-    float max_chi2=100.;
-    float min_nhits=20.;
+    float max_chi2=80.;
+    float min_nhits=30.;
     //****************************************
 
     TFile *fout=0;
@@ -54,10 +54,6 @@ int main(int argc, char* argv[])
 
     setbranchstatus();
     setbranchaddress();
-
-    time_t rawtime;
-    time ( &rawtime );
-    if( verbose ) cout << "time="<<  rawtime <<"\n"<<endl;
 
     time_t runTime_begin; //start time of the current run
     time_t runTime_end; //end time of the current run
@@ -97,16 +93,13 @@ int main(int argc, char* argv[])
 	    kdb_close(connection);
 	}
 
-        //if(k>10) continue;
-
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-	if( bcosm.P>min_p && bcosm.P<max_p && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
+	if( bcosm.P>min_p && bcosm.P<max_p  && bcosm.munhits>min_munhits && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
 	{
 	    for(int i=0; i<bcosm.natc_cr; i++)
 	    {
 		if ( verbose ) cout<<"cnt"<<bcosm.cnt[i]<<"\t"<<"npe="<<bcosm.npe[i]<<endl;
-		//for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.aerogel_REGION0[i]==1 ) pr[j]->Fill(runTime_begin,bcosm.npe[i]);
 		for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.aerogel_REGION[i]==1 && bcosm.wlshit[i]!=1 ) pr[j]->Fill(runTime_begin,bcosm.npe[i]);
 	    }
 	}
@@ -141,7 +134,6 @@ int main(int argc, char* argv[])
 	pr[i]->GetXaxis()->SetTitleSize(0.05);
 	pr[i]->GetXaxis()->SetTitleOffset(1.0);
 	pr[i]->GetXaxis()->SetLabelSize(0.05);
-	//pr[i]->GetXaxis()->SetNdivisions(205);
 	pr[i]->GetXaxis()->SetNdivisions(510);
 	pr[i]->GetYaxis()->SetTitleSize(0.05);
 	pr[i]->GetYaxis()->SetTitleOffset(1.00);

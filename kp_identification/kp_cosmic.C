@@ -236,8 +236,7 @@ int main(int argc, char* argv[])
     TMultiGraph* mg1[160];
     TMultiGraph* mg2[160];
 
-    //for(int i=0; i<160; i++)
-    for(int i=0; i<5; i++)
+    for(int i=0; i<160; i++)
     {
         c.cd(1);
 	h1[i]->GetXaxis()->SetTitle("N_{ph.e.}");
@@ -404,7 +403,7 @@ int main(int argc, char* argv[])
 	gPad->Modified(); gPad->Update();
 
 	c.Update();
-	c.Print(KEDR+TString::Format("cnt_%d.png",i).Data());
+	c.Print(KEDR + "/" + TString::Format("cnt_%d.png",i).Data());
     }
 
     fout->Write();
