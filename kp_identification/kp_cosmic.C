@@ -27,7 +27,7 @@ inline char* timestamp(time_t t)
 
 int Usage(string status)
 {
-	cout<<"Usage: "<<progname<<"\t"<<" 0,1,... "<<endl;
+	cout<<"Usage: "<<progname<<"\t"<<" 2014 ( or 2015, 2016 ...) "<<endl;
         exit(0);
 }
 
@@ -37,8 +37,8 @@ int main(int argc, char* argv[])
     if( argc>1 )
     {
 	key=atoi(argv[1]);
-	if( key>6 ){ Usage(progname); return 0;}
-	if( key<0 ){ Usage(progname); return 0;}
+	if( key>2020 ){ Usage(progname); return 0;}
+	if( key<2014 ){ Usage(progname); return 0;}
     }
     else
     {
@@ -49,11 +49,11 @@ int main(int argc, char* argv[])
     bool verbose=0;
 
     //***************preselections*************
-    int min_munhits=2;
+    int min_munhits=3;
     float min_p=50.; //MeV
     float max_p=10000.; //MeV
-    float max_chi2=100.;
-    float min_nhits=20.;
+    float max_chi2=80.;
+    float min_nhits=30.;
     float Npethr=0.1;
     //****************************************
 
@@ -62,8 +62,10 @@ int main(int argc, char* argv[])
     TString KEDR;
     TString dir_out="/spool/users/ovtin/cosmruns/results";
     TString fout_result=dir_out + "/" + "fout_result.dat";
-    fnameout=dir_out + "/" + "kp_ident_cosm.root";
-    KEDR = "/home/ovtin/public_html/kp_identification/";
+    fnameout=dir_out + "/" + TString::Format("kp_ident_cosm_%d.root",key).Data();
+    KEDR = TString::Format("/home/ovtin/public_html/kp_identification_%d",key).Data();
+    gSystem->Exec("mkdir "+ KEDR);
+    gSystem->Exec("cp /home/ovtin/public_html/index.php "+ KEDR);
     fout_result=dir_out + "/" + "out_cosm.dat";
 
     cout<<fnameout<<endl;
@@ -137,7 +139,7 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-	if( bcosm.P>min_p && bcosm.P<max_p && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits )
+	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.munhits>min_munhits && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
 	{
 	    Pkaon=bcosm.P*(mkaon/mmuon);
 	    Ppion=bcosm.P*(mpion/mmuon);
@@ -201,7 +203,8 @@ int main(int argc, char* argv[])
 
                         Ksigma[j][ii]=0;
 			Ksigma[j][ii]=sqrt(2.)*pow(TMath::Erf(-1+2*(1-eff_k[j][ii])),-1)+pow(TMath::Erf(-1+2*eff_p[j][ii]),-1);
-                        if ( Ksigma[j][ii]<0 || Ksigma[j][ii]>10 ) Ksigma[j][ii]=0;
+                        if ( Ksigma[j][ii]>12 ) Ksigma[j][ii]=12;
+                        if ( Ksigma[j][ii]<0 ) Ksigma[j][ii]=0;
 			if ( verbose ) cout<<"#sigma="<<Ksigma[j][ii]<<endl;
 		    }
 
@@ -233,7 +236,8 @@ int main(int argc, char* argv[])
     TMultiGraph* mg1[160];
     TMultiGraph* mg2[160];
 
-    for(int i=0; i<160; i++)
+    //for(int i=0; i<160; i++)
+    for(int i=0; i<5; i++)
     {
         c.cd(1);
 	h1[i]->GetXaxis()->SetTitle("N_{ph.e.}");
@@ -259,6 +263,8 @@ int main(int argc, char* argv[])
 	h2[i]->Draw("hist");
 
         c.cd(3);
+	gPad->SetLogy();
+        //h3[i]->SetAxisRange(0, 1e4, "Y");
 	h3[i]->Draw("hist");
 
 	c.cd(4);
@@ -336,11 +342,18 @@ int main(int argc, char* argv[])
 	gr3[i]->GetXaxis()->SetTitle("P, MeV/c");
 	gr3[i]->GetYaxis()->SetTitle("Efficiency");
 
+        mg1[i]->SetMaximum(1.2);
+	mg1[i]->SetMinimum(0);
         mg1[i]->Add(gr1[i]);
 	mg1[i]->Add(gr2[i]);
 	mg1[i]->Add(gr3[i]);
 	mg1[i]->SetTitle("Efficiency&Momentum; P, MeV/c; Efficiency");
 	mg1[i]->Draw("ap");
+	gPad->Modified(); gPad->Update();
+	mg1[i]->GetYaxis()->SetLimits(0, 1.2);
+	mg1[i]->SetMinimum(0.);
+	mg1[i]->SetMaximum(1.2);
+	gPad->Modified(); gPad->Update();
 
 	c.cd(8);
         gPad->SetGrid();
@@ -357,10 +370,17 @@ int main(int argc, char* argv[])
 	gr5[i]->SetLineWidth(2);
 	gr5[i]->SetLineColor(2);
 
+        mg2[i]->SetMaximum(1.2);
+	mg2[i]->SetMinimum(0);
 	mg2[i]->Add(gr4[i]);
 	mg2[i]->Add(gr5[i]);
 	mg2[i]->SetTitle("K efficiency and #pi Misidentification; P, MeV/c; K efficiency and #pi Misidentification");
 	mg2[i]->Draw("ap");
+	gPad->Modified(); gPad->Update();
+	mg2[i]->GetYaxis()->SetLimits(0., 1.2);
+	mg2[i]->SetMinimum(0.);
+	mg2[i]->SetMaximum(1.2);
+	gPad->Modified(); gPad->Update();
         TLine *l5=new TLine(650,0,650,1);
 	l5->SetLineColor(kRed);
 	l5->Draw();
@@ -376,9 +396,12 @@ int main(int argc, char* argv[])
 	gr6[i]->SetLineWidth(2);
 	gr6[i]->SetLineColor(3);
 	gr6[i]->SetTitle("#sigma");
-	TAxis *axis3 = gr6[i]->GetYaxis();
-	axis3->SetLimits(0.,10.);
         gr6[i]->Draw("ap");
+	gPad->Modified(); gPad->Update();
+	gr6[i]->GetYaxis()->SetLimits(0., 8.);
+	gr6[i]->SetMinimum(0.);
+	gr6[i]->SetMaximum(8.0);
+	gPad->Modified(); gPad->Update();
 
 	c.Update();
 	c.Print(KEDR+TString::Format("cnt_%d.png",i).Data());

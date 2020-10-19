@@ -23,7 +23,7 @@
 #$ -M ovtin.ivan@gmail.com
 
 #start the job
-$HOME/development/cosmicMuons/kp_identification/kp_cosmic 6
+$HOME/development/cosmicMuons/kp_identification/kp_cosmic 2014
 
 status=$?
 if [ $status != 0 ]; then

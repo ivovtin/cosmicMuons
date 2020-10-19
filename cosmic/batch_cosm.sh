@@ -8,11 +8,11 @@
 # -------------------------------------------
 # --     What to redirect to where         --
 #$ -cwd
-#$ -o $JOB_NAME.o$JOB_ID
+#$ -o /spool/users/ovtin/$JOB_NAME.o$JOB_ID
 #$ -j y
 # -------------------------------------------
 # --             Enviroment                --
-#$ -v PATH=$PATH:$HOME/release/KdRunFastMon,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/alexbarn/release/lib,KDBHOST=bison-2
+##$ -v PATH=$PATH:$HOME/development/lib:/home/ovtin/development/KrKRec,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/ovtin/development/lib,KDBHOST=bison-2
 # -------------------------------------------
 # --             Queue list                --
 #$ -soft

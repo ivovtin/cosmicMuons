@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     for (int j=0; j<160; j++)
     {
 	sprintf(name0,"Cnt%d",j);
-	pr[j]=new TProfile(name0,name0,200,1400778000,1601554829,0,200);
+	pr[j]=new TProfile(name0,name0,1000,1400778000,1601554829,0,200);
     }
 
     int runprev=0;
@@ -101,12 +101,13 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-	if( bcosm.P>min_p && bcosm.P<max_p && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits )
+	if( bcosm.P>min_p && bcosm.P<max_p && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
 	{
 	    for(int i=0; i<bcosm.natc_cr; i++)
 	    {
 		if ( verbose ) cout<<"cnt"<<bcosm.cnt[i]<<"\t"<<"npe="<<bcosm.npe[i]<<endl;
-		for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.aerogel_REGION0[i]==1 ) pr[j]->Fill(runTime_begin,bcosm.npe[i]);
+		//for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.aerogel_REGION0[i]==1 ) pr[j]->Fill(runTime_begin,bcosm.npe[i]);
+		for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.aerogel_REGION[i]==1 && bcosm.wlshit[i]!=1 ) pr[j]->Fill(runTime_begin,bcosm.npe[i]);
 	    }
 	}
 
@@ -132,9 +133,9 @@ int main(int argc, char* argv[])
 	pr[i]->Fit(namefit,"","",1400778000,1601554829);
 	pr[i]->SetMarkerStyle(20);
 	pr[i]->SetMarkerSize(0.5);
-	pr[i]->SetMarkerColor(2);
+	pr[i]->SetMarkerColor(1);
 	pr[i]->SetLineWidth(2);
-	pr[i]->SetLineColor(2);
+	pr[i]->SetLineColor(1);
 	pr[i]->GetXaxis()->SetTimeDisplay(1);
 	pr[i]->GetXaxis()->SetTimeFormat("%d/%m/%y%F1970-01-01 00:00:00");
 	pr[i]->GetXaxis()->SetTitleSize(0.05);
