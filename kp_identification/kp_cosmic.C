@@ -49,12 +49,11 @@ int main(int argc, char* argv[])
     bool verbose=0;
 
     //***************preselections*************
-    int min_munhits=3;
     float min_p=50.; //MeV
     float max_p=10000.; //MeV
-    float max_chi2=80.;
+    float max_chi2=100.;
     float min_nhits=30.;
-    float Npethr=0.1;
+    float Npethr=0.3;
     //****************************************
 
     TFile *fout=0;
@@ -63,7 +62,7 @@ int main(int argc, char* argv[])
     TString dir_out="/spool/users/ovtin/cosmruns/results";
     TString fout_result=dir_out + "/" + "fout_result.dat";
     fnameout=dir_out + "/" + TString::Format("kp_ident_cosm_%d.root",key).Data();
-    KEDR = TString::Format("/home/ovtin/public_html/kp_identification_%d",key).Data();
+    KEDR = dir_out + "/" + TString::Format("kp_identification_%d",key).Data();
     gSystem->Exec("mkdir "+ KEDR);
     gSystem->Exec("cp /home/ovtin/public_html/index.php "+ KEDR);
     fout_result=dir_out + "/" + "out_cosm.dat";
@@ -139,7 +138,7 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.munhits>min_munhits && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
+	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
 	{
 	    Pkaon=bcosm.P*(mkaon/mmuon);
 	    Ppion=bcosm.P*(mpion/mmuon);
@@ -202,8 +201,8 @@ int main(int argc, char* argv[])
 			}
 
                         Ksigma[j][ii]=0;
-			Ksigma[j][ii]=sqrt(2.)*pow(TMath::Erf(-1+2*(1-eff_k[j][ii])),-1)+pow(TMath::Erf(-1+2*eff_p[j][ii]),-1);
-                        if ( Ksigma[j][ii]>12 ) Ksigma[j][ii]=12;
+			Ksigma[j][ii]=abs(sqrt(2.)*(TMath::ErfInverse(1-2*eff_k[j][ii])+TMath::ErfInverse(1-2*(1-eff_p[j][ii]))));
+                        if ( Ksigma[j][ii]>10 ) Ksigma[j][ii]=0;
                         if ( Ksigma[j][ii]<0 ) Ksigma[j][ii]=0;
 			if ( verbose ) cout<<"#sigma="<<Ksigma[j][ii]<<endl;
 		    }
