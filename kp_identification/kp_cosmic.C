@@ -80,11 +80,12 @@ int main(int argc, char* argv[])
 
     float Pkaon,Ppion, mkaon=493.66, mpion=139.57, mmuon=105.65;
 
-    char name1[160],name2[160],name3[160],name4[160],name5[160],name6[160],name7[160];
+    char name1[160],name2[160],name3[160],name4[160],name5[160],name6[160],name7[160],name8[160];
     TH1F* h1[160];
     TH1F* h2[160];
     TH1F* h3[160];
     TH1F* h4[160];
+    TH1F* h5[160];
     TProfile* pr1[160];
     TProfile* pr2[160];
     TProfile* pr3[160];
@@ -104,6 +105,14 @@ int main(int argc, char* argv[])
 	pr2[j]=new TProfile(name6,"#pi and K npe/Momentum",200,0,3000,0,50);
 	sprintf(name7,"pr3_#K_cnt%d",j);
 	pr3[j]=new TProfile(name7,"#K npe/Momentum",200,0,3000,0,50);
+	sprintf(name8,"h5_runs_cnt%d",j);
+        if( key==2014 ) h5[j]=new TH1F(name8,"runs",1230,19635,20865);
+        if( key==2015 ) h5[j]=new TH1F(name8,"runs",2091,20885,22976);
+        if( key==2016 ) h5[j]=new TH1F(name8,"runs",1176,23002,24176);
+        if( key==2017 ) h5[j]=new TH1F(name8,"runs",1723,24597,26320);
+        if( key==2018 ) h5[j]=new TH1F(name8,"runs",1587,26337,27924);
+        if( key==2019 ) h5[j]=new TH1F(name8,"runs",961,28059,29020);
+        if( key==2020 ) h5[j]=new TH1F(name8,"runs",427,29091,29518);
     }
 
 
@@ -138,6 +147,9 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
+        if( bcosm.run>24087 && bcosm.run<24177 ) continue;
+        if( bcosm.run>25750 && bcosm.run<25850 ) continue;
+
 	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
 	{
 	    Pkaon=bcosm.P*(mkaon/mmuon);
@@ -159,6 +171,7 @@ int main(int argc, char* argv[])
 		    }
 
 		    h4[j]->Fill(bcosm.emcenergy/bcosm.P);
+		    h5[j]->Fill(bcosm.run);
 
 		    pr1[j]->Fill(bcosm.P,bcosm.npe[i]);
 		    pr2[j]->Fill(Ppion,bcosm.npe[i]);
@@ -400,6 +413,9 @@ int main(int argc, char* argv[])
 	gr6[i]->SetMinimum(0.);
 	gr6[i]->SetMaximum(8.0);
 	gPad->Modified(); gPad->Update();
+
+	c.cd(10);
+	h5[i]->Draw();
 
 	c.Update();
 	c.Print(KEDR + "/" + TString::Format("cnt_%d.png",i).Data());

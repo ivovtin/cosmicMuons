@@ -28,10 +28,9 @@ int main(int argc, char* argv[])
     bool verbose=0;
 
     //***************preselections*************
-    int min_munhits=3;
     float min_p=1000.; //MeV
     float max_p=10000.; //MeV
-    float max_chi2=80.;
+    float max_chi2=100.;
     float min_nhits=30.;
     //****************************************
 
@@ -76,6 +75,9 @@ int main(int argc, char* argv[])
 	tt->GetEntry(k);
 	if( (k %100000)==0 )cout<<k<<endl;
 
+	if( bcosm.run>24087 && bcosm.run<24177 ) continue;
+        if( bcosm.run>25750 && bcosm.run<25850 ) continue;
+
 	if( k==0 || runprev!=bcosm.run ){
 	    KDBconn* connection=kdb_open();
 	    if( !connection ) {
@@ -95,7 +97,7 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-	if( bcosm.P>min_p && bcosm.P<max_p  && bcosm.munhits>min_munhits && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
+	if( bcosm.P>min_p && bcosm.P<max_p  && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
 	{
 	    for(int i=0; i<bcosm.natc_cr; i++)
 	    {
