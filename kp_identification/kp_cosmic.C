@@ -248,6 +248,10 @@ int main(int argc, char* argv[])
     TMultiGraph* mg1[160];
     TMultiGraph* mg2[160];
 
+    float mu_0;
+    float mu_max;
+    TH1F *h6 = new TH1F("N_{ph.e.}","N_{ph.e.}",15,0,15);
+
     for(int i=0; i<160; i++)
     {
         c.cd(1);
@@ -409,9 +413,9 @@ int main(int argc, char* argv[])
 	gr6[i]->SetTitle("#sigma");
         gr6[i]->Draw("ap");
 	gPad->Modified(); gPad->Update();
-	gr6[i]->GetYaxis()->SetLimits(0., 8.);
+	gr6[i]->GetYaxis()->SetLimits(0., 5.);
 	gr6[i]->SetMinimum(0.);
-	gr6[i]->SetMaximum(8.0);
+	gr6[i]->SetMaximum(5.0);
 	gPad->Modified(); gPad->Update();
 
 	c.cd(10);
@@ -419,7 +423,22 @@ int main(int argc, char* argv[])
 
 	c.Update();
 	c.Print(KEDR + "/" + TString::Format("cnt_%d.png",i).Data());
+
+	mu_0=myfit1[i]->GetParameter(0);
+	mu_max=myfit1[i]->GetParameter(1);
+        h6->Fill(mu_max);
     }
+
+    TCanvas c1("c1","c1",600,600);
+    c1.cd();
+    gROOT->SetStyle("Plain");
+    h6->SetTitle("; N_{ph.e.}; Number of counters");
+    h6->GetXaxis()->SetTitleOffset(1.2);
+    h6->GetYaxis()->SetTitleOffset(1.2);
+    h6->SetFillColor(kRed);
+    h6->Draw();
+    c1.Update();
+    c1.Print(KEDR + "/" + "Nphe.png");
 
     fout->Write();
     fout->Close();

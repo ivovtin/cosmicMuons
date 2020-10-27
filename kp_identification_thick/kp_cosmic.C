@@ -148,7 +148,8 @@ int main(int argc, char* argv[])
 	if( bcosm.run>24087 && bcosm.run<24177 ) continue;
 	if( bcosm.run>25750 && bcosm.run<25850 ) continue;
 
-	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
+	//if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
+	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<35 )
 	{
 	    Pkaon=bcosm.P*(mkaon/mmuon);
 	    Ppion=bcosm.P*(mpion/mmuon);
@@ -175,7 +176,8 @@ int main(int argc, char* argv[])
 	    {
 		if ( verbose ) cout<<"cnt"<<bcosm.cnt[i]<<"\t"<<"npe="<<bcosm.npe[i]<<endl;
 
-		if( bcosm.aerogel_REGION[i]==1 && bcosm.wlshit[i]!=1 )
+		//if( bcosm.aerogel_REGION[i]==1 && bcosm.wlshit[i]!=1 )
+		if( bcosm.single_aerogel_REGION5[i]==1 && bcosm.wlshit[i]!=1 )
 		{
 		    //cout<<"cnt="<<bcosm.cnt[i]<<endl;
 
@@ -333,6 +335,10 @@ int main(int argc, char* argv[])
     TGraphErrors* gr6[160];
     TMultiGraph* mg1[160];
     TMultiGraph* mg2[160];
+
+    float mu_0;
+    float mu_max;
+    TH1F *h6 = new TH1F("N_{ph.e.}","N_{ph.e.}",20,0,20);
 
     for(int i=0; i<80; i++)
     {
@@ -527,7 +533,21 @@ int main(int argc, char* argv[])
 	    of.close();
 	}
 
+	mu_0=myfit1[i]->GetParameter(0);
+	mu_max=myfit1[i]->GetParameter(1);
+        h6->Fill(mu_max);
     }
+
+    TCanvas c1("c1","c1",600,600);
+    c1.cd();
+    gROOT->SetStyle("Plain");
+    h6->SetTitle("; N_{ph.e.}; Number of counters");
+    h6->GetXaxis()->SetTitleOffset(1.2);
+    h6->GetYaxis()->SetTitleOffset(1.2);
+    h6->SetFillColor(kRed);
+    h6->Draw();
+    c1.Update();
+    c1.Print(KEDR + "/" + "Nphe.png");
 
     fout->Write();
     fout->Close();
