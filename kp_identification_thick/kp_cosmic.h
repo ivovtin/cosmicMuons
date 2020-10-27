@@ -49,6 +49,7 @@
     data bcosm;
 
     int key;
+    float Npethr=0.3;
     TChain *tt=new TChain("et");
     void chain(){
 	if(key==2014){

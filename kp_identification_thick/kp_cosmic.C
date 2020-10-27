@@ -27,7 +27,7 @@ inline char* timestamp(time_t t)
 
 int Usage(string status)
 {
-	cout<<"Usage: "<<progname<<"\t"<<" 2014 ( or 2015, 2016 ...) "<<endl;
+	cout<<"Usage: "<<progname<<"\t"<<" 2014 ( or 2015, 2016 ...)   Npethr"<<endl;
         exit(0);
 }
 
@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
     if( argc>1 )
     {
 	key=atoi(argv[1]);
+	Npethr=atof(argv[2]);
 	if( key>2020 ){ Usage(progname); return 0;}
 	if( key<2014 ){ Usage(progname); return 0;}
     }
@@ -53,19 +54,17 @@ int main(int argc, char* argv[])
     float max_p=10000.; //MeV
     float max_chi2=100.;
     float min_nhits=30.;
-    float Npethr=1.0;
     //****************************************
 
     TFile *fout=0;
     TString fnameout;
     TString KEDR;
     TString dir_out="/spool/users/ovtin/cosmruns/results";
-    TString fout_result=dir_out + "/" + "fout_result.dat";
-    fnameout=dir_out + "/" + TString::Format("kp_ident_thick_cosm_%d.root",key).Data();
-    KEDR = dir_out + "/" + TString::Format("kp_identification_thick_%d",key).Data();
+    KEDR = dir_out + "/" + TString::Format("kp_identification_thick_%d_%f",key,Npethr).Data();
     gSystem->Exec("mkdir "+ KEDR);
     gSystem->Exec("cp /home/ovtin/public_html/index.php "+ KEDR);
-    fout_result=dir_out + "/" + "out_cosm.dat";
+    gSystem->Exec("ln -s "+ KEDR + " /home/ovtin/public_html/thick_cnt/"+ TString::Format("kp_identification_thick_%d_%f",key,Npethr).Data());
+    fnameout=KEDR + "/" + TString::Format("kp_ident_thick_cosm_%d.root",key).Data();
 
     cout<<fnameout<<endl;
     fout = new TFile(fnameout,"RECREATE");
@@ -94,11 +93,11 @@ int main(int argc, char* argv[])
 	sprintf(name1,"h1_mom_cnt%d",j);
 	h1[j]=new TH1F(name1,"Cosmic muon momentum",200,0,3000);
 	sprintf(name2,"h2_npe_cnt%d",j);
-        h2[j]=new TH1F(name2,"<<Kaons>>",500,0,50);
+	h2[j]=new TH1F(name2,"<<Kaons>>",500,0,50);
 	sprintf(name3,"h3_npe_cnt%d",j);
 	h3[j]=new TH1F(name3,"<<#pi>>",500,0,50);
 	sprintf(name4,"h4_etop_cnt%d",j);
-        h4[j]=new TH1F(name4,"e/p",200,0,2);
+	h4[j]=new TH1F(name4,"e/p",200,0,2);
 	sprintf(name5,"pr1_#mu_cnt%d",j);
 	pr1[j]=new TProfile(name5,"#mu npe/Momentum",200,0,3000,0,50);
 	sprintf(name6,"pr2_#pi_cnt%d",j);
@@ -106,15 +105,14 @@ int main(int argc, char* argv[])
 	sprintf(name7,"pr3_#K_cnt%d",j);
 	pr3[j]=new TProfile(name7,"#K npe/Momentum",200,0,3000,0,50);
 	sprintf(name8,"h5_runs_cnt%d",j);
-        if( key==2014 ) h5[j]=new TH1F(name8,"runs",1230,19635,20865);
-        if( key==2015 ) h5[j]=new TH1F(name8,"runs",2091,20885,22976);
-        if( key==2016 ) h5[j]=new TH1F(name8,"runs",1176,23002,24176);
-        if( key==2017 ) h5[j]=new TH1F(name8,"runs",1723,24597,26320);
-        if( key==2018 ) h5[j]=new TH1F(name8,"runs",1587,26337,27924);
-        if( key==2019 ) h5[j]=new TH1F(name8,"runs",961,28059,29020);
-        if( key==2020 ) h5[j]=new TH1F(name8,"runs",427,29091,29518);
+	if( key==2014 ) h5[j]=new TH1F(name8,"runs",1230,19635,20865);
+	if( key==2015 ) h5[j]=new TH1F(name8,"runs",2091,20885,22976);
+	if( key==2016 ) h5[j]=new TH1F(name8,"runs",1176,23002,24176);
+	if( key==2017 ) h5[j]=new TH1F(name8,"runs",1723,24597,26320);
+	if( key==2018 ) h5[j]=new TH1F(name8,"runs",1587,26337,27924);
+	if( key==2019 ) h5[j]=new TH1F(name8,"runs",961,28059,29020);
+	if( key==2020 ) h5[j]=new TH1F(name8,"runs",427,29091,29518);
     }
-
 
     float p_all[160][20];
     float err_p_all[160][20];
@@ -147,8 +145,8 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-        if( bcosm.run>24087 && bcosm.run<24177 ) continue;
-        if( bcosm.run>25750 && bcosm.run<25850 ) continue;
+	if( bcosm.run>24087 && bcosm.run<24177 ) continue;
+	if( bcosm.run>25750 && bcosm.run<25850 ) continue;
 
 	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
 	{
@@ -159,15 +157,15 @@ int main(int argc, char* argv[])
 	    int nn=0;
 	    int j=0;
 	    int jj=0;
-            int counter0;
-            int counter1;
-            int counter2;
-            int counter3;
-            int counter4;
-            int counter5;
-            int counter6;
-            float sum_npe=0;
-            float sum_npe1=0;
+	    int counter0;
+	    int counter1;
+	    int counter2;
+	    int counter3;
+	    int counter4;
+	    int counter5;
+	    int counter6;
+	    float sum_npe=0;
+	    float sum_npe1=0;
 	    int n2=0;
 	    int n3=0;
 	    int n5=0;
@@ -181,7 +179,7 @@ int main(int argc, char* argv[])
 		{
 		    //cout<<"cnt="<<bcosm.cnt[i]<<endl;
 
-                    //crossing cylinder with top
+		    //crossing cylinder with top
 		    if (j==0) counter1=bcosm.cnt[i];
 		    j++;
 		    if(counter1<80){
@@ -200,12 +198,11 @@ int main(int argc, char* argv[])
 			n++;
 			sum_npe+=bcosm.npe[i];
 			//cout<<"\t"<<"k="<<k<<"\t"<<"counter1="<<counter1<<"\t"<<"bcosm.cnt[i]="<<bcosm.cnt[i]<<endl;
-                        if(bcosm.cnt[i]==counter2) n2++;
-                        if(bcosm.cnt[i]==counter3) n3++;
+			if(bcosm.cnt[i]==counter2) n2++;
+			if(bcosm.cnt[i]==counter3) n3++;
 		    }
 
-
-                    //crossing cylinder with bottom
+		    //crossing cylinder with bottom
 		    if( bcosm.cnt[i]!=counter1 && bcosm.cnt[i]!=counter2 && bcosm.cnt[i]!=counter3 )
 		    {
 			if (jj==0)
@@ -213,7 +210,7 @@ int main(int argc, char* argv[])
 			    sum_npe1=0;
 			    counter4=bcosm.cnt[i];
 			}
-                        jj++;
+			jj++;
 			if(counter4<80){
 			    counter5=counter4+80;
 			    counter6=counter4+79;
@@ -231,15 +228,15 @@ int main(int argc, char* argv[])
 			nn++;
 			sum_npe1+=bcosm.npe[i];
 			//cout<<"\t"<<"k="<<k<<"\t"<<"counter4="<<counter4<<"\t"<<"bcosm.cnt[i]="<<bcosm.cnt[i]<<endl;
-                        if(bcosm.cnt[i]==counter5) n5++;
-                        if(bcosm.cnt[i]==counter6) n6++;
+			if(bcosm.cnt[i]==counter5) n5++;
+			if(bcosm.cnt[i]==counter6) n6++;
 		    }
 
 		    //if ( bcosm.cnt[i]!=counter1 && bcosm.cnt[i]!=counter2 && bcosm.cnt[i]!=counter3 && bcosm.cnt[i]!=counter4 && bcosm.cnt[i]!=counter5 && bcosm.cnt[i]!=counter6 ) cout<<"\t"<<"k="<<k<<"\t"<<"************************************bcosm.cnt[i]="<<bcosm.cnt[i]<<endl;
 
 		    if(n>1 || nn>1)
 		    {
-                        //cout<<"n>1 or nn>1"<<endl;
+			//cout<<"n>1 or nn>1"<<endl;
 
 			counter0=counter1;
 			if ( counter0>=80 && n2==1 ) counter0=counter2;
@@ -310,19 +307,15 @@ int main(int argc, char* argv[])
 			    Ksigma[counter0][ii]=abs(sqrt(2.)*(TMath::ErfInverse(1-2*eff_k[counter0][ii])+TMath::ErfInverse(1-2*(1-eff_p[counter0][ii]))));
 			    if ( verbose ) cout<<"#sigma="<<Ksigma[counter0][ii]<<endl;
 			}
-
 		    }
-
 		}
 	    }
 	}
-
     }
 
     gStyle->SetPalette(1);
     gStyle->SetOptStat(11);
     gStyle->SetOptFit(1011);
-
 
     TCanvas c("c","c",1600,1200);
     c.Divide(4,3);
@@ -343,12 +336,12 @@ int main(int argc, char* argv[])
 
     for(int i=0; i<80; i++)
     {
-        c.cd(1);
+	c.cd(1);
 	h1[i]->GetXaxis()->SetTitle("N_{ph.e.}");
 	h1[i]->SetTitle("Momentum");
-        h1[i]->SetXTitle("P, MeV/c");
+	h1[i]->SetXTitle("P, MeV/c");
 	h1[i]->Draw();
-        TLine *l1=new TLine(200,0,200,4500);
+	TLine *l1=new TLine(200,0,200,4500);
 	l1->SetLineColor(kRed);
 	l1->Draw();
 	TLine *l2=new TLine(300,0,300,4500);
@@ -366,7 +359,7 @@ int main(int argc, char* argv[])
 	h2[i]->SetLineColor(kRed);
 	h2[i]->Draw("hist");
 
-        c.cd(3);
+	c.cd(3);
 	gPad->SetLogy();
 	h3[i]->Draw("hist");
 
@@ -374,8 +367,8 @@ int main(int argc, char* argv[])
 	h4[i]->Draw("hist");
 
 	c.cd(5);
-        sprintf(namefit1,"myfit1",i);
-        myfit1[i]=new TF1(namefit1,"[0]+[1]*(x^2-[2]^2)/(x^2)*(TMath::Erf(x-[2])+1)/2",200.,3000.);
+	sprintf(namefit1,"myfit1",i);
+	myfit1[i]=new TF1(namefit1,"[0]+[1]*(x^2-[2]^2)/(x^2)*(TMath::Erf(x-[2])+1)/2",200.,3000.);
 	myfit1[i]->SetLineColor(kBlue);
 	myfit1[i]->SetParameter(0,pr1[i]->GetMinimum());
 	myfit1[i]->SetParameter(1,pr1[i]->GetMaximum());
@@ -393,8 +386,8 @@ int main(int argc, char* argv[])
 	gPad->Modified(); gPad->Update();
 
 	c.cd(6);
-        sprintf(namefit2,"myfit2",i);
-        myfit2[i]=new TF1(namefit2,"[0]+[1]*(x^2-[2]^2)/(x^2)*(TMath::Erf(x-[2])+1)/2",200.,3000.);
+	sprintf(namefit2,"myfit2",i);
+	myfit2[i]=new TF1(namefit2,"[0]+[1]*(x^2-[2]^2)/(x^2)*(TMath::Erf(x-[2])+1)/2",200.,3000.);
 	myfit2[i]->SetLineColor(kBlue);
 	myfit2[i]->SetParameter(0,pr2[i]->GetMinimum());
 	myfit2[i]->SetParameter(1,pr2[i]->GetMaximum());
@@ -413,7 +406,7 @@ int main(int argc, char* argv[])
 	myfit3[i]->SetParameter(2,200);
 	myfit3[i]->SetParNames("#mu_{0}","#mu_{max}","P_{thr}");
 	pr3[i]->Fit(namefit3,"","",520,3000);
-        pr3[i]->SetLineColor(kRed);
+	pr3[i]->SetLineColor(kRed);
 	pr3[i]->SetXTitle("P, MeV/c");
 	pr3[i]->SetYTitle("N_{ph.e.}");
 	gStyle->SetOptFit(1011);
@@ -431,7 +424,7 @@ int main(int argc, char* argv[])
 	//gPad->Modified(); gPad->Update();
 
 	c.cd(7);
-        gPad->SetGrid();
+	gPad->SetGrid();
 	mg1[i] = new TMultiGraph();
 	gr1[i]=new TGraphErrors(20,p_all[i],eff_mu[i],err_p_all[i],err_eff_mu[i]);
 	gr1[i]->SetMarkerStyle(20);
@@ -460,9 +453,9 @@ int main(int argc, char* argv[])
 	gr3[i]->GetXaxis()->SetTitle("P, MeV/c");
 	gr3[i]->GetYaxis()->SetTitle("Efficiency");
 
-        mg1[i]->SetMaximum(1.2);
+	mg1[i]->SetMaximum(1.2);
 	mg1[i]->SetMinimum(0);
-        mg1[i]->Add(gr1[i]);
+	mg1[i]->Add(gr1[i]);
 	mg1[i]->Add(gr2[i]);
 	mg1[i]->Add(gr3[i]);
 	mg1[i]->SetTitle("Efficiency&Momentum; P, MeV/c; Efficiency");
@@ -474,7 +467,7 @@ int main(int argc, char* argv[])
 	gPad->Modified(); gPad->Update();
 
 	c.cd(8);
-        gPad->SetGrid();
+	gPad->SetGrid();
 	mg2[i] = new TMultiGraph();
 	gr4[i]=new TGraphErrors(20,p_all[i],not_eff_p[i],err_p_all[i],0);
 	gr4[i]->SetMarkerStyle(20);
@@ -488,7 +481,7 @@ int main(int argc, char* argv[])
 	gr5[i]->SetLineWidth(2);
 	gr5[i]->SetLineColor(2);
 
-        mg2[i]->SetMaximum(1.2);
+	mg2[i]->SetMaximum(1.2);
 	mg2[i]->SetMinimum(0);
 	mg2[i]->Add(gr4[i]);
 	mg2[i]->Add(gr5[i]);
@@ -499,7 +492,7 @@ int main(int argc, char* argv[])
 	mg2[i]->SetMinimum(0.);
 	mg2[i]->SetMaximum(1.2);
 	gPad->Modified(); gPad->Update();
-        TLine *l5=new TLine(650,0,650,1);
+	TLine *l5=new TLine(650,0,650,1);
 	l5->SetLineColor(kRed);
 	l5->Draw();
 	TLine *l6=new TLine(1500,0,1500,1);
@@ -508,13 +501,13 @@ int main(int argc, char* argv[])
 
 	c.cd(9);
 	gPad->SetGrid();
-        gr6[i]=new TGraphErrors(20,p_all[i],Ksigma[i],err_p_all[i],0);
+	gr6[i]=new TGraphErrors(20,p_all[i],Ksigma[i],err_p_all[i],0);
 	gr6[i]->SetMarkerStyle(20);
 	gr6[i]->SetMarkerColor(3);
 	gr6[i]->SetLineWidth(2);
 	gr6[i]->SetLineColor(3);
 	gr6[i]->SetTitle("#sigma");
-        gr6[i]->Draw("ap");
+	gr6[i]->Draw("ap");
 	gPad->Modified(); gPad->Update();
 	gr6[i]->GetYaxis()->SetLimits(0., 5.);
 	gr6[i]->SetMinimum(0.);
@@ -526,6 +519,14 @@ int main(int argc, char* argv[])
 
 	c.Update();
 	c.Print(KEDR + "/" + TString::Format("cnt_%d.png",i).Data());
+
+	for(int ii=5; ii<=16; ii++)
+	{
+	    ofstream of(KEDR + "/" + TString::Format("cnt_thick_%d_npetrh%f_eff_ineff_p%d.dat",i,Npethr,ii).Data(),ios::app);
+	    of<<"\t"<<Npethr<<"\t"<<"\t"<<eff_p[i][ii]<<"\t"<<eff_k[i][ii]<<"\t"<<not_eff_p[i][ii]<<"\t"<<not_eff_k[i][ii]<<"\t"<<Ksigma[i][ii]<<endl;
+	    of.close();
+	}
+
     }
 
     fout->Write();

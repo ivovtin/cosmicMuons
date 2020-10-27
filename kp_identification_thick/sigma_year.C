@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 	for (int j=0; j<80; j++)
 	{
 	    sprintf(name1,"Cnt%d",j);
-	    pr1[j] = new TProfile(name1,"#sigma",100,0,6.5,0,5);
+	    pr1[j] = new TProfile(name1,"#sigma",100,2013,2021,0,5);
 	}
 
 	for (int cnt=0; cnt<80; cnt++)
