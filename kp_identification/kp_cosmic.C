@@ -147,10 +147,16 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-        if( bcosm.run>24087 && bcosm.run<24177 ) continue;
-        if( bcosm.run>25750 && bcosm.run<25850 ) continue;
+	if( bcosm.run>24087 && bcosm.run<24177 ) continue;       //2016 oct
+	if( bcosm.run>25750 && bcosm.run<25850 ) continue;       //2017 oct
+	if( bcosm.run==25451 ) continue;                         //2017 may
+	if( bcosm.run==25441 ) continue;                         //2017 may
+	if( bcosm.run==28333 ) continue;                         //2019 may
+	if( bcosm.run==28334 ) continue;                         //2019 may
+	if( bcosm.run==28430 ) continue;                         //2019 jun
+	if( bcosm.run==28431 ) continue;                         //2019 jun
 
-	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
+	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<35 )
 	{
 	    Pkaon=bcosm.P*(mkaon/mmuon);
 	    Ppion=bcosm.P*(mpion/mmuon);
@@ -158,7 +164,7 @@ int main(int argc, char* argv[])
 	    for(int i=0; i<bcosm.natc_cr; i++)
 	    {
 		if ( verbose ) cout<<"cnt"<<bcosm.cnt[i]<<"\t"<<"npe="<<bcosm.npe[i]<<endl;
-		for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.aerogel_REGION[i]==1 )
+		for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.single_aerogel_REGION5[i]==1 )
 		{
 		    h1[j]->Fill(bcosm.P);
 

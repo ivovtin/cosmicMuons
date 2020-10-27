@@ -22,8 +22,48 @@
 #$ -m beas
 #$ -M ovtin.ivan@gmail.com
 
+#$ -t 1-7
+
+i=${SGE_TASK_ID}
+myrand=$[1000+$i]
+
+if [ $i == 1 ]; then
+Year=2014
+echo "Year=" "$Year"
+fi
+
+if [ $i == 2 ]; then
+Year=2015
+echo "Year=" "$Year"
+fi
+
+if [ $i == 3 ]; then
+Year=2016
+echo "Year=" "$Year"
+fi
+
+if [ $i == 4 ]; then
+Year=2017
+echo "Year=" "$Year"
+fi
+
+if [ $i == 5 ]; then
+Year=2018
+echo "Year=" "$Year"
+fi
+
+if [ $i == 6 ]; then
+Year=2019
+echo "Year=" "$Year"
+fi
+
+if [ $i == 7 ]; then
+Year=2020
+echo "Year=" "$Year"
+fi
+
 #start the job
-$HOME/development/cosmicMuons/kp_identification/kp_cosmic 2014
+$HOME/development/cosmicMuons/kp_identification/kp_cosmic $Year
 
 status=$?
 if [ $status != 0 ]; then

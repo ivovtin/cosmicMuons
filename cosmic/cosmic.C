@@ -4,12 +4,15 @@
 #include "TCanvas.h"
 #include <vector>
 #include <algorithm>
+#include <TMultiGraph.h>
+#include <TGraphErrors.h>
 
 #include "KDB/kdb.h"
 
 #include "cosmic.h"
 
 using namespace std;
+string progname;
 
 inline char* timestamp(time_t t)
 {
@@ -35,13 +38,14 @@ int main(int argc, char* argv[])
     //****************************************
 
     TFile *fout=0;
-    TString fnameout;
     TString KEDR;
     TString dir_out="/spool/users/ovtin/cosmruns/results";
-    TString fout_result=dir_out + "/" + "fout_result.dat";
-    fnameout=dir_out + "/" + "exp_cosm.root";
-    KEDR = "/home/ovtin/public_html/cosmic/";
-    fout_result=dir_out + "/" + "out_cosm.dat";
+    KEDR = dir_out + "/" + "cosm_stability";
+    gSystem->Exec("mkdir "+ KEDR);
+    gSystem->Exec("cp /home/ovtin/public_html/index.php "+ KEDR);
+    gSystem->Exec("ln -s "+ KEDR + " /home/ovtin/public_html/cosmic");
+    TString fnameout;
+    fnameout=KEDR + "/" + "exp_cosm.root";
 
     cout<<fnameout<<endl;
     fout = new TFile(fnameout,"RECREATE");
@@ -75,8 +79,14 @@ int main(int argc, char* argv[])
 	tt->GetEntry(k);
 	if( (k %100000)==0 )cout<<k<<endl;
 
-	if( bcosm.run>24087 && bcosm.run<24177 ) continue;
-        if( bcosm.run>25750 && bcosm.run<25850 ) continue;
+	if( bcosm.run>24087 && bcosm.run<24177 ) continue;       //2016 oct
+	if( bcosm.run>25750 && bcosm.run<25850 ) continue;       //2017 oct
+	if( bcosm.run==25451 ) continue;                         //2017 may
+	if( bcosm.run==25441 ) continue;                         //2017 may
+	if( bcosm.run==28333 ) continue;                         //2019 may
+	if( bcosm.run==28334 ) continue;                         //2019 may
+	if( bcosm.run==28430 ) continue;                         //2019 jun
+	if( bcosm.run==28431 ) continue;                         //2019 jun
 
 	if( k==0 || runprev!=bcosm.run ){
 	    KDBconn* connection=kdb_open();
@@ -97,12 +107,12 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-	if( bcosm.P>min_p && bcosm.P<max_p  && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<25 )
+	if( bcosm.P>min_p && bcosm.P<max_p  && bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<35 )
 	{
 	    for(int i=0; i<bcosm.natc_cr; i++)
 	    {
 		if ( verbose ) cout<<"cnt"<<bcosm.cnt[i]<<"\t"<<"npe="<<bcosm.npe[i]<<endl;
-		for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.aerogel_REGION[i]==1 && bcosm.wlshit[i]!=1 ) pr[j]->Fill(runTime_begin,bcosm.npe[i]);
+		for( int j=0; j<160; j++) if( j==bcosm.cnt[i] && bcosm.single_aerogel_REGION5[i]==1 && bcosm.wlshit[i]!=1 ) pr[j]->Fill(runTime_begin,bcosm.npe[i]);
 	    }
 	}
 
@@ -147,7 +157,7 @@ int main(int argc, char* argv[])
 	pr[i]->SetTitle("");
 	pr[i]->Draw();
 	c.Update();
-	c.Print(KEDR+TString::Format("cnt_%d.png",i).Data());
+	c.Print(KEDR + "/" + TString::Format("cnt_%d.png",i).Data());
     }
 
     fout->Write();
