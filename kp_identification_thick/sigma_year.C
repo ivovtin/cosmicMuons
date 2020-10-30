@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     TString result= dir_in + "/" + "thick_results_allyears";
     gSystem->Exec("mkdir "+ result);
     gSystem->Exec("cp /home/ovtin/public_html/index.php "+ result);
-    gSystem->Exec("ln -s "+ result + " /home/ovtin/public_html/thick_cnt/thick_results_allyears");
+    gSystem->Exec("ln -s "+ result + " /home/ovtin/public_html/atc_cosmic/thick_cnt/thick_results_allyears");
 
     for (int i=1; i<=12; i++)
     {

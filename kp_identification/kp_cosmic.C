@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
         if( key==2017 ) h5[j]=new TH1F(name8,"runs",1723,24597,26320);
         if( key==2018 ) h5[j]=new TH1F(name8,"runs",1587,26337,27924);
         if( key==2019 ) h5[j]=new TH1F(name8,"runs",961,28059,29020);
-        if( key==2020 ) h5[j]=new TH1F(name8,"runs",427,29091,29518);
+        if( key==2020 ) h5[j]=new TH1F(name8,"runs",513,29091,29604);
     }
 
 
@@ -147,14 +147,33 @@ int main(int argc, char* argv[])
 
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
-	if( bcosm.run>24087 && bcosm.run<24177 ) continue;       //2016 oct
-	if( bcosm.run>25750 && bcosm.run<25850 ) continue;       //2017 oct
-	if( bcosm.run==25451 ) continue;                         //2017 may
-	if( bcosm.run==25441 ) continue;                         //2017 may
-	if( bcosm.run==28333 ) continue;                         //2019 may
-	if( bcosm.run==28334 ) continue;                         //2019 may
-	if( bcosm.run==28430 ) continue;                         //2019 jun
-	if( bcosm.run==28431 ) continue;                         //2019 jun
+	//skip runs
+        if( bcosm.run==19770 || bcosm.run==19771 || bcosm.run==19772 || bcosm.run==19774 || bcosm.run==19776 ) continue;  //2014
+        if( bcosm.run==19779 || bcosm.run==19794 || bcosm.run==19796 || bcosm.run==19797 || bcosm.run==19654 ) continue;  //2014
+        if( bcosm.run==19655 || bcosm.run==20143 ) continue;  //2014
+	if( bcosm.run==21817 || bcosm.run==21818 || bcosm.run==21819 || bcosm.run==21820 || bcosm.run==21821 ) continue;  //2015
+	if( bcosm.run==23716 || bcosm.run==23720 || bcosm.run==23907 ) continue;                       //2016
+	if( bcosm.run>24087 && bcosm.run<24177 ) continue;                                             //2016
+	if( bcosm.run>25750 && bcosm.run<25850 ) continue;                                             //2017
+	if( bcosm.run==25252 || bcosm.run==25253 || bcosm.run==25254 || bcosm.run==25255 ) continue;   //2017
+	if( bcosm.run==25256 || bcosm.run==25257 || bcosm.run==25258 || bcosm.run==25259 ) continue;   //2017
+	if( bcosm.run==25451 || bcosm.run==25441 || bcosm.run==25576 || bcosm.run==25577 || bcosm.run==25578 ) continue;   //2017
+	if( bcosm.run==25580 || bcosm.run==25581 || bcosm.run==26337 || bcosm.run==26338 || bcosm.run==26349 ) continue;   //2017
+	if( bcosm.run==27016 || bcosm.run==27293 || bcosm.run==27642 || bcosm.run==27643 ) continue;   //2018
+	if( bcosm.run==27760 || bcosm.run==27761 || bcosm.run==27857 || bcosm.run==27861 ) continue;   //2018
+	if( bcosm.run==27922 || bcosm.run==27923 || bcosm.run==27924 || bcosm.run==26341 ) continue;   //2018
+	if( bcosm.run==28333 || bcosm.run==28334 || bcosm.run==28429 || bcosm.run==28430 || bcosm.run==28431 ) continue;   //2019
+	if( bcosm.run==28438 || bcosm.run>28677 && bcosm.run<28745 ) continue;                                             //2019
+	if( bcosm.run==28529 || bcosm.run==28754 || bcosm.run==28882 ) continue;                       //2019
+	if( bcosm.run==29091 || bcosm.run==29092 || bcosm.run==29123 || bcosm.run==29127 ) continue;   //2020
+        if( bcosm.run==29146 || bcosm.run==29161 || bcosm.run==29162 || bcosm.run==29165 ) continue;   //2020
+	if( bcosm.run==29431 || bcosm.run==29432 || bcosm.run==29433 || bcosm.run==29480 ) continue;   //2020
+	if( bcosm.run==29441 || bcosm.run==29442 || bcosm.run==29443 || bcosm.run==29445 ) continue;   //2020
+	if( bcosm.run==29446 || bcosm.run==29447 || bcosm.run==29448 || bcosm.run==29449 ) continue;   //2020
+	if( bcosm.run==29450 || bcosm.run==29451 || bcosm.run==29452 || bcosm.run==29455 || bcosm.run==29456 ) continue;   //2020
+	if( bcosm.run==29457 || bcosm.run==29458 || bcosm.run==29459 || bcosm.run==29590 || bcosm.run==29591 ) continue;   //2020
+        if( bcosm.run==29525 || bcosm.run==29595 || bcosm.run==29596 || bcosm.run==29597 ) continue;   //2020
+	if( bcosm.run==29598 || bcosm.run==29599 || bcosm.run==29582 || bcosm.run==29589 || bcosm.run==29601 ) continue;   //2020
 
 	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<35 )
 	{
@@ -257,6 +276,8 @@ int main(int argc, char* argv[])
     float mu_0;
     float mu_max;
     TH1F *h6 = new TH1F("N_{ph.e.}","N_{ph.e.}",15,0,15);
+    TH1F *h7 = new TH1F("Barrel N_{ph.e.}","N_{ph.e.}",15,0,15);
+    TH1F *h8 = new TH1F("Endcap N_{ph.e.}","N_{ph.e.}",15,0,15);
 
     for(int i=0; i<160; i++)
     {
@@ -433,6 +454,26 @@ int main(int argc, char* argv[])
 	mu_0=myfit1[i]->GetParameter(0);
 	mu_max=myfit1[i]->GetParameter(1);
         h6->Fill(mu_max);
+	if(i<80){
+	    if( i>=20 && i<60 )
+	    {
+		h7->Fill(mu_max);
+	    }
+	    else
+	    {
+		h8->Fill(mu_max);
+	    }
+	}
+	else{
+	    if( i>=100 && i<140 )
+	    {
+		h7->Fill(mu_max);
+	    }
+	    else
+	    {
+		h8->Fill(mu_max);
+	    }
+	}
     }
 
     TCanvas c1("c1","c1",600,600);
@@ -446,7 +487,28 @@ int main(int argc, char* argv[])
     c1.Update();
     c1.Print(KEDR + "/" + "Nphe.png");
 
+    TCanvas c2("c2","c2",600,600);
+    c2.cd();
+    gROOT->SetStyle("Plain");
+    h7->SetTitle("Barrel; N_{ph.e.}; Number of counters");
+    h7->GetXaxis()->SetTitleOffset(1.2);
+    h7->GetYaxis()->SetTitleOffset(1.2);
+    h7->SetFillColor(kRed);
+    h7->Draw();
+    c2.Update();
+    c2.Print(KEDR + "/" + "Nphe_barrel.png");
+
+    TCanvas c3("c3","c3",600,600);
+    c3.cd();
+    gROOT->SetStyle("Plain");
+    h8->SetTitle("Endcap; N_{ph.e.}; Number of counters");
+    h8->GetXaxis()->SetTitleOffset(1.2);
+    h8->GetYaxis()->SetTitleOffset(1.2);
+    h8->SetFillColor(kRed);
+    h8->Draw();
+    c3.Update();
+    c3.Print(KEDR + "/" + "Nphe_endcap.png");
+
     fout->Write();
     fout->Close();
-
 }

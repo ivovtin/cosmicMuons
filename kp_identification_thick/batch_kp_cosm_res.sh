@@ -22,8 +22,13 @@
 #$ -m beas
 #$ -M ovtin.ivan@gmail.com
 
+#$ -t 2014-2020
+
+i=${SGE_TASK_ID}
+myrand=$[1000+$i]
+
 #start the job
-$HOME/development/cosmicMuons/kp_identification_thick/npethr_misident 2020
+$HOME/development/cosmicMuons/kp_identification_thick/npethr_misident $i
 
 status=$?
 if [ $status != 0 ]; then

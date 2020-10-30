@@ -88,7 +88,7 @@ echo "Npethr=" "$Npethr"
 fi
 
 #start the job
-$HOME/development/cosmicMuons/kp_identification_thick/kp_cosmic 2020 $Npethr
+$HOME/development/cosmicMuons/kp_identification_thick/kp_cosmic 2019 $Npethr
 
 status=$?
 if [ $status != 0 ]; then

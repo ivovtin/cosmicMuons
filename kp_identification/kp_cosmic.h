@@ -86,6 +86,8 @@
 	    for(int i=1; i<=9; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_oct17_%d.root",i).Data());
 	    for(int i=1; i<=1; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_nov17_%d.root",i).Data());
 	    for(int i=1; i<=7; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_dec17_%d.root",i).Data());
+	    for(int i=1; i<=6; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_SC1_17_%d.root",i).Data());
+	    for(int i=1; i<=2; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_SC2_17_%d.root",i).Data());
 	}
 	else if (key==2018){
 	    for(int i=1; i<=7; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jan18_%d.root",i).Data());
@@ -94,7 +96,7 @@
 	    for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_march18_%d.root",i).Data());
 	    for(int i=1; i<=6; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_may18_%d.root",i).Data());
 	    for(int i=1; i<=3; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jun18_%d.root",i).Data());
-	    for(int i=1; i<=3; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_nov18_%d.root",i).Data());
+	    for(int i=1; i<=1; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_nov18_%d.root",i).Data());
 	}
 	else if (key==2019){
 	    for(int i=1; i<=7; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_apr19_%d.root",i).Data());
@@ -103,12 +105,14 @@
 	    for(int i=1; i<=15; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_oct19_%d.root",i).Data());
 	    for(int i=1; i<=13; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_nov19_%d.root",i).Data());
 	    for(int i=1; i<=1; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_dec19_%d.root",i).Data());
+	    for(int i=1; i<=21; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_SC1_19_%d.root",i).Data());
+	    for(int i=1; i<=3; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_SC2_19_%d.root",i).Data());
 	}
 	else if (key==2020){
 	    for(int i=1; i<=10; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_feb20_%d.root",i).Data());
 	    for(int i=1; i<=9; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_march20_%d.root",i).Data());
 	    for(int i=1; i<=15; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_sep20_%d.root",i).Data());
-	    for(int i=1; i<=1; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_oct20_%d.root",i).Data());
+	    for(int i=1; i<=45; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_oct20_%d.root",i).Data());
 	}
     }
 

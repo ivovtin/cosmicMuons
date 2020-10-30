@@ -17,12 +17,12 @@
 # --             Queue list                --
 #$ -soft
 #$ -l time=24:00:00
-#$ -q remote
-##$ -q extralong
+##$ -q remote
+#$ -q extralong
 #$ -m beas
 #$ -M ovtin.ivan@gmail.com
 
-#$ -t 1-1
+#$ -t 10-21
 
 i=${SGE_TASK_ID}
 myrand=$[1000+$i]
@@ -148,6 +148,14 @@ myrand=$[1000+$i]
 ##inruns="/spool/users/ovtin/cosmruns/dec17cosmruns_"$i
 ##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_dec17_"$i".root"
 
+##6
+##inruns="/spool/users/ovtin/cosmruns/SC1_17cosmruns_"$i
+##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_SC1_17_"$i".root"
+
+##2
+##inruns="/spool/users/ovtin/cosmruns/SC2_17cosmruns_"$i
+##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_SC2_17_"$i".root"
+
 ##7 +
 ##inruns="/spool/users/ovtin/cosmruns/jan18cosmruns_"$i
 ##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_jan18_"$i".root"
@@ -172,7 +180,7 @@ myrand=$[1000+$i]
 ##inruns="/spool/users/ovtin/cosmruns/jun18cosmruns_"$i
 ##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_jun18_"$i".root"
 
-##3 +
+##1 +
 ##inruns="/spool/users/ovtin/cosmruns/nov18cosmruns_"$i
 ##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_nov18_"$i".root"
 
@@ -200,6 +208,14 @@ myrand=$[1000+$i]
 ##inruns="/spool/users/ovtin/cosmruns/dec19cosmruns_"$i
 ##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_dec19_"$i".root"
 
+##21
+inruns="/spool/users/ovtin/cosmruns/SC1_19cosmruns_"$i
+outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_SC1_19_"$i".root"
+
+##3
+##inruns="/spool/users/ovtin/cosmruns/SC2_19cosmruns_"$i
+##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_SC2_19_"$i".root"
+
 ##10 +
 ##inruns="/spool/users/ovtin/cosmruns/feb20cosmruns_"$i
 ##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_feb20_"$i".root"
@@ -212,9 +228,9 @@ myrand=$[1000+$i]
 ##inruns="/spool/users/ovtin/cosmruns/sep20cosmruns_"$i
 ##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_sep20_"$i".root"
 
-##1 +
-inruns="/spool/users/ovtin/cosmruns/oct20cosmruns_"$i
-outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_oct20_"$i".root"
+##45 +
+##inruns="/spool/users/ovtin/cosmruns/oct20cosmruns_"$i
+##outfile="/spool/users/ovtin/cosmruns/results/cosm_runs_oct20_"$i".root"
 
 echo "inruns=" "$inruns"
 echo "outfile=" "$outfile"

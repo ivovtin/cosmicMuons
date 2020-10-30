@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
     TString result= dir_in + "/" + TString::Format("thick_results_%d",key).Data();
     gSystem->Exec("mkdir "+ result);
     gSystem->Exec("cp /home/ovtin/public_html/index.php "+ result);
-    gSystem->Exec("ln -s "+ result + " /home/ovtin/public_html/thick_cnt/"+ TString::Format("thick_results_%d",key).Data());
+    gSystem->Exec("ln -s "+ result + " /home/ovtin/public_html/atc_cosmic/thick_cnt/"+ TString::Format("thick_results_%d",key).Data());
     TString fname = result + "/" + TString::Format("cnt_thick_misindentification_allcnt_%d.root",key).Data();
     fout=new TFile(fname,"RECREATE");
     cout<<fname<<endl;
