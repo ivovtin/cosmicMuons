@@ -148,32 +148,38 @@ int main(int argc, char* argv[])
 	if ( verbose ) cout<<"P="<<bcosm.P<<"\t"<<"Natc_cross="<<bcosm.natc_cr<<endl;
 
 	//skip runs
-        if( bcosm.run==19770 || bcosm.run==19771 || bcosm.run==19772 || bcosm.run==19774 || bcosm.run==19776 ) continue;  //2014
-        if( bcosm.run==19779 || bcosm.run==19794 || bcosm.run==19796 || bcosm.run==19797 || bcosm.run==19654 ) continue;  //2014
-        if( bcosm.run==19655 || bcosm.run==20143 ) continue;  //2014
-	if( bcosm.run==21817 || bcosm.run==21818 || bcosm.run==21819 || bcosm.run==21820 || bcosm.run==21821 ) continue;  //2015
-	if( bcosm.run==23716 || bcosm.run==23720 || bcosm.run==23907 ) continue;                       //2016
-	if( bcosm.run>24087 && bcosm.run<24177 ) continue;                                             //2016
-	if( bcosm.run>25750 && bcosm.run<25850 ) continue;                                             //2017
-	if( bcosm.run==25252 || bcosm.run==25253 || bcosm.run==25254 || bcosm.run==25255 ) continue;   //2017
-	if( bcosm.run==25256 || bcosm.run==25257 || bcosm.run==25258 || bcosm.run==25259 ) continue;   //2017
-	if( bcosm.run==25451 || bcosm.run==25441 || bcosm.run==25576 || bcosm.run==25577 || bcosm.run==25578 ) continue;   //2017
-	if( bcosm.run==25580 || bcosm.run==25581 || bcosm.run==26337 || bcosm.run==26338 || bcosm.run==26349 ) continue;   //2017
-	if( bcosm.run==27016 || bcosm.run==27293 || bcosm.run==27642 || bcosm.run==27643 ) continue;   //2018
-	if( bcosm.run==27760 || bcosm.run==27761 || bcosm.run==27857 || bcosm.run==27861 ) continue;   //2018
-	if( bcosm.run==27922 || bcosm.run==27923 || bcosm.run==27924 || bcosm.run==26341 ) continue;   //2018
-	if( bcosm.run==28333 || bcosm.run==28334 || bcosm.run==28429 || bcosm.run==28430 || bcosm.run==28431 ) continue;   //2019
-	if( bcosm.run==28438 || bcosm.run>28677 && bcosm.run<28745 ) continue;                                             //2019
-	if( bcosm.run==28529 || bcosm.run==28754 || bcosm.run==28882 ) continue;                       //2019
-	if( bcosm.run==29091 || bcosm.run==29092 || bcosm.run==29123 || bcosm.run==29127 ) continue;   //2020
-        if( bcosm.run==29146 || bcosm.run==29161 || bcosm.run==29162 || bcosm.run==29165 ) continue;   //2020
-	if( bcosm.run==29431 || bcosm.run==29432 || bcosm.run==29433 || bcosm.run==29480 ) continue;   //2020
-	if( bcosm.run==29441 || bcosm.run==29442 || bcosm.run==29443 || bcosm.run==29445 ) continue;   //2020
-	if( bcosm.run==29446 || bcosm.run==29447 || bcosm.run==29448 || bcosm.run==29449 ) continue;   //2020
+        if( bcosm.run==19727 || bcosm.run==19770 || bcosm.run==19771 || bcosm.run==19772 || bcosm.run==19774 ) continue;   //2014
+        if( bcosm.run==19776 || bcosm.run==19779 || bcosm.run==19794 || bcosm.run==19796 || bcosm.run==19797 ) continue;   //2014
+        if( bcosm.run==19654 || bcosm.run==19655 || bcosm.run==20143 || bcosm.run==20864 ) continue;                       //2014
+	if( bcosm.run==21817 || bcosm.run==21818 || bcosm.run==21819 || bcosm.run==21820 || bcosm.run==21821 ) continue;   //2015
+	if( bcosm.run==23716 || bcosm.run==23720 || bcosm.run==23907 ) continue;                                           //2016
+	if( bcosm.run>24087 && bcosm.run<24177 ) continue;                                                                 //2016
+	if( bcosm.run>25750 && bcosm.run<25850 ) continue;                                                                 //2017
+	if( bcosm.run==24714 || bcosm.run==24715 || bcosm.run==24716 || bcosm.run==24717 || bcosm.run==24718 ) continue;   //2017
+	if( bcosm.run==25050 || bcosm.run==25300 || bcosm.run==25451 || bcosm.run==25252 || bcosm.run==25253 ) continue;   //2017
+	if( bcosm.run==25254 || bcosm.run==25255 || bcosm.run==25256 || bcosm.run==25257 || bcosm.run==25258 ) continue;   //2017
+	if( bcosm.run==25259 || bcosm.run==25295 || bcosm.run==25441 || bcosm.run==25576 || bcosm.run==25577 ) continue;   //2017
+	if( bcosm.run==25578 || bcosm.run==25580 || bcosm.run==25581 || bcosm.run==25868 || bcosm.run==25878 ) continue;   //2017
+	if( bcosm.run==26270 || bcosm.run==26337 || bcosm.run==26338 || bcosm.run==26339 ) continue;                       //2017
+	if( bcosm.run==26349 || bcosm.run==26862 || bcosm.run==27016 || bcosm.run==27293 || bcosm.run==27642 ) continue;   //2018
+	if( bcosm.run==27643 || bcosm.run==27760 || bcosm.run==27761 || bcosm.run==27857 || bcosm.run==27861 ) continue;   //2018
+	if( bcosm.run==27922 || bcosm.run==27923 || bcosm.run==27924 || bcosm.run==26341 ) continue;                       //2018
+	if( bcosm.run==28060 || bcosm.run==28061 || bcosm.run==28090 || bcosm.run==28091 || bcosm.run==28111 ) continue;   //2019
+	if( bcosm.run==28112 || bcosm.run==28191 || bcosm.run==28192 || bcosm.run==28334 || bcosm.run==28429 ) continue;   //2019
+	if( bcosm.run==28438 || bcosm.run==28529 || bcosm.run==28639 || bcosm.run==28231 || bcosm.run==28430 ) continue;   //2019
+	if( bcosm.run==28431 || bcosm.run==28547 || bcosm.run==28648 || bcosm.run==28674 || bcosm.run==28677 ) continue;   //2019
+	if( bcosm.run==28708 || bcosm.run==28752 || bcosm.run==28778 || bcosm.run==28754 || bcosm.run==28814 ) continue;   //2019
+	if( bcosm.run==28882 || bcosm.run==28893 || bcosm.run==28894 || bcosm.run==28956 || bcosm.run==29019 ) continue;   //2019
+	if( bcosm.run==29020 || bcosm.run==29091 || bcosm.run==29092 || bcosm.run==29123 || bcosm.run==29127 ) continue;   //2020
+        if( bcosm.run==29146 || bcosm.run==29161 || bcosm.run==29162 || bcosm.run==29165 ) continue;                       //2020
+	if( bcosm.run==29336 || bcosm.run==29337 || bcosm.run==29431 || bcosm.run==29432 || bcosm.run==29433 ) continue;   //2020
+	if( bcosm.run==29480 || bcosm.run==29441 || bcosm.run==29442 || bcosm.run==29443 || bcosm.run==29445 ) continue;   //2020
+	if( bcosm.run==29446 || bcosm.run==29447 || bcosm.run==29448 || bcosm.run==29449 ) continue;                       //2020
 	if( bcosm.run==29450 || bcosm.run==29451 || bcosm.run==29452 || bcosm.run==29455 || bcosm.run==29456 ) continue;   //2020
 	if( bcosm.run==29457 || bcosm.run==29458 || bcosm.run==29459 || bcosm.run==29590 || bcosm.run==29591 ) continue;   //2020
-        if( bcosm.run==29525 || bcosm.run==29595 || bcosm.run==29596 || bcosm.run==29597 ) continue;   //2020
-	if( bcosm.run==29598 || bcosm.run==29599 || bcosm.run==29582 || bcosm.run==29589 || bcosm.run==29601 ) continue;   //2020
+        if( bcosm.run==29522 || bcosm.run==29525 || bcosm.run==29557 || bcosm.run==29558 || bcosm.run==29581 ) continue;   //2020
+	if( bcosm.run==29595 || bcosm.run==29596 || bcosm.run==29597 || bcosm.run==29598 || bcosm.run==29599 ) continue;   //2020
+	if( bcosm.run==29582 || bcosm.run==29589 || bcosm.run==29601 ) continue;                                           //2020
 
 	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<35 )
 	{
