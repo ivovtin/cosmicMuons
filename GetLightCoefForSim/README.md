@@ -9,7 +9,7 @@
 Для вычисления коэффициентов светосбора данные полученные на космических мюонах разбиваются на временные промежутки с интерваломи 1.5-6 месяцев. 
 
 Доклады и статьи где приведено описание получения данных коэффициентов: <br />
-https://rich2018.org/indico/event/1/contributions/54/attachments/48/77/ovtin_rich2018.pdf
+https://rich2018.org/indico/event/1/contributions/54/attachments/48/77/ovtin_rich2018.pdf <br />
 https://www.sciencedirect.com/science/article/pii/S0168900219308502?via%3Dihub <br />
 https://e-publishing.cern.ch/index.php/CP/article/view/349 <br />
 https://iopscience.iop.org/article/10.1088/1748-0221/12/07/C07041 <br />
