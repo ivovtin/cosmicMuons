@@ -117,6 +117,12 @@ typedef struct {
     single_active_REGION[10],single_active_REGION0[10],single_active_REGION5[10],single_active_REGION20[10],
     single_testreg[10];
     Float_t wlshit[10],nearwls[10],tlen[10],pathwls[10],npe[10],npen[10];
+    Float_t rin[10], phiin[10], zin[10];	//local cylindric coordinates of track in-point
+    Float_t rout[10], phiout[10], zout[10]; //local cylindric coordinates of track out-point
+    Float_t rwls[10], phiwls[10], zwls[10];	//position of WLS crossing (middle plane of the counter)
+    Float_t neighnpe[10];           //maximum amplitude of neighbouring counters
+    Float_t Rin_gl[10], Phiin_gl[10], Zin_gl[10];	//global cylindric coordinates of track in-point
+    Float_t Rout_gl[10], Phiout_gl[10], Zout_gl[10];     //global cylindric coordinates of track out-point
     Float_t Xip,Yip,Zip;
 } BCOSM;
 
@@ -300,6 +306,26 @@ int analyse_event()
 			bcosm.npen[i] = ThicknessBarrel2*0.1*bcosm.npe[i]/bcosm.tlen[i];
 		}
 
+		bcosm.rin[i]=atc_track.rin[t][i]*0.1;
+		bcosm.rout[i]=atc_track.rout[t][i]*0.1;
+		bcosm.phiin[i]=atc_track.phiin[t][i];
+		bcosm.phiout[i]=atc_track.phiout[t][i];
+		bcosm.zin[i]=atc_track.zin[t][i]*0.1;
+		bcosm.zout[i]=atc_track.zout[t][i]*0.1;
+		bcosm.rwls[i]=atc_track.rwls[t][i]*0.1;
+		bcosm.phiwls[i]=atc_track.phiwls[t][i];
+		bcosm.zwls[i]=atc_track.zwls[t][i]*0.1;
+
+		double rin_gl,phiin_gl,zin_gl,rout_gl,phiout_gl,zout_gl;
+		atc_get_global(icnt+1,atc_track.rin[t][i],atc_track.phiin[t][i],atc_track.zin[t][i],rin_gl, phiin_gl,zin_gl);
+		atc_get_global(icnt+1,atc_track.rout[t][i],atc_track.phiout[t][i],atc_track.zout[t][i],rout_gl, phiout_gl,zout_gl);
+		bcosm.Rin_gl[i]=rin_gl*0.1;
+		bcosm.Rout_gl[i]=rout_gl*0.1;
+		bcosm.Phiin_gl[i]=phiin_gl;
+		bcosm.Phiout_gl[i]=phiout_gl;
+		bcosm.Zin_gl[i]=zin_gl*0.1;
+		bcosm.Zout_gl[i]=zout_gl*0.1;
+
 		//===================================================ATC_DOUBLE_CROSS===================================
 		//если есть пересечение области аэрогеля с разным отступом от стенок и от шифтера
 		if( atc_track_cross_region(t,i,ATC_AEROGEL_REGION,ATC_DOUBLE_CROSS) )  bcosm.aerogel_REGION[i]=1;
@@ -459,7 +485,9 @@ int main(int argc, char* argv[])
 			  ":natc_cr/I:cnt[10]:aerogel_REGION[10]:aerogel_REGION0[10]:aerogel_REGION5[10]:aerogel_REGION20[10]:active_REGION[10]:active_REGION0[10]"
 			  ":active_REGION5[10]:active_REGION20[10]:testreg[10]:single_aerogel_REGION[10]:single_aerogel_REGION0[10]:single_aerogel_REGION5[10]"
 			  ":single_aerogel_REGION20[10]:single_active_REGION[10]:single_active_REGION0[10]:single_active_REGION5[10]:single_active_REGION20[10]:single_testreg[10]"
-			  ":wlshit[10]/F:nearwls[10]:tlen[10]:pathwls[10]:npe[10]:npen[10]:Xip:Yip:Zip");
+			  ":wlshit[10]/F:nearwls[10]:tlen[10]:pathwls[10]:npe[10]:npen[10]"
+			  ":rin[10]:phiin[10]:zin[10]:rout[10]:phiout[10]:zout[10]:rwls[10]:phiwls[10]:zwls[10]:neighnpe[10]:Rin_gl[10]:Phiin_gl[10]:Zin_gl[10]"
+			  ":Rout_gl[10]:Phiout_gl[10]:Zout_gl[10]:Xip:Yip:Zip");
 
 	//Set kframework signal handling
 	kf_install_signal_handler(1);
@@ -509,8 +537,10 @@ int main(int argc, char* argv[])
 	kf_register_selection(KF_EMC_SEL,emc_event_rejection);
 	kf_register_selection(KF_MU_SEL,mu_event_rejection);
 
-	kf_MCCalibRunNumber(1,progpar.MCCalibRunNumber,progpar.MCCalibRunNumber,1.,1.,1.);
-        kf_kdisplay_cut(progpar.kdisp_ev_cut);
+	kf_MCCalibRunNumber(1,progpar.MCCalibRunNumber,progpar.MCCalibRunNumber,50,1.,1.,1.);
+	//kf_MCCalibRunNumber(progpar.simOn,progpar.MCCalibRunNumber,progpar.MCCalibRunNumberL,progpar.NsimRate,progpar.Scale,progpar.Ascale,progpar.Zscale);
+
+	kf_kdisplay_cut(progpar.kdisp_ev_cut);
 	//Set automatic cosmic run determination
 //	kf_cosmic(-1);  //auto
 	kf_cosmic(1);  //cosmic  >0

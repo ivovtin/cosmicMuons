@@ -32,7 +32,8 @@ FOPTS  = -g -fvxt -Wall -fno-automatic -finit-local-zero \
 -DCOMPDATE="'$(COMPDATE)'" -I$(CERN)/pro/include -I$(CERN)/pro/include/geant321
 
 # Дополнительные опции для линкера
-LDOPTS = -Xlinker -rpath -Xlinker `root-config --libdir`
+##LDOPTS = -Xlinker -rpath -Xlinker `root-config --libdir`
+LDOPTS = -lg2c `root-config --libs` /space/KEDR/stable/lib/libVDDCRec.a  -lMinuit
 
 #Если определена переменная ONLYBINARY, то библиотека в пакете отсутствует
 ONLYBINARY=""
