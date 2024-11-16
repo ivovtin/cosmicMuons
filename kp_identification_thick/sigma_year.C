@@ -48,12 +48,12 @@ int main(int argc, char* argv[])
     float npetrh;
     float eff_pion, eff_kaon, not_eff_pion, not_eff_kaon, Ksigma;
 
-    TString dir_in="/spool/users/ovtin/cosmruns/results";
+    TString dir_in="/store/users/ovtin/cosmruns/results";
 
-    TString result= dir_in + "/" + "thick_results_allyears";
+    TString result= dir_in + "/" + "thick_results_600-1500_aerReg0_new_allyears";
     gSystem->Exec("mkdir "+ result);
     gSystem->Exec("cp /home/ovtin/public_html/index.php "+ result);
-    gSystem->Exec("ln -s "+ result + " /home/ovtin/public_html/atc_cosmic/thick_cnt/thick_results_allyears");
+    gSystem->Exec("ln -s "+ result + " /home/ovtin/public_html/atc_cosmic/thick_cnt_aerReg0/thick_results_600-1500_allyears");
 
     for (int i=1; i<=12; i++)
     {
@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 	if(i==12) Npethr=4.5;
 
 	TFile *fout=0;
-	TString fname = result + "/" + TString::Format("cnt_thick_sigma_years_%f.root",Npethr).Data();
+	TString fname = result + "/" + TString::Format("cnt_thick_600-1500_sigma_years_%f.root",Npethr).Data();
 	fout=new TFile(fname,"RECREATE");
 	cout<<fname<<endl;
 
@@ -80,17 +80,17 @@ int main(int argc, char* argv[])
 	for (int j=0; j<80; j++)
 	{
 	    sprintf(name1,"Cnt%d",j);
-	    pr1[j] = new TProfile(name1,"#sigma",100,2013,2021,0,5);
+	    pr1[j] = new TProfile(name1,"#sigma",100,2013,2024,0,5);
 	}
 
 	for (int cnt=0; cnt<80; cnt++)
 	{
-	    for (int key=2014; key<=2020; key++)
+	    for (int key=2014; key<=2023; key++)
 	    {
 
-		TString KEDR = dir_in + "/" + TString::Format("kp_identification_thick_%d_%f",key,Npethr).Data();
+		TString KEDR = dir_in + "/" + TString::Format("kp_identification_thick_aerReg0_new_%d_%f",key,Npethr).Data();
 
-		for (int ii=9; ii<=14; ii++)
+		for (int ii=6; ii<=15; ii++)
 		{
 		    TString fin = KEDR + "/" + TString::Format("cnt_thick_%d_npetrh%f_eff_ineff_p%d.dat",cnt,Npethr,ii).Data();
 		    //cout<<fin<<endl;
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 	gROOT->SetStyle("Plain");
 	gStyle->SetOptStat(0000);
 
-	TCanvas c("c","c",600,600);
+	TCanvas c("c","c",900,600);
 
 	for( int i=0; i<80; i++ )
 	{

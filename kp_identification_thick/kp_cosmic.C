@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     {
 	key=atoi(argv[1]);
 	Npethr=atof(argv[2]);
-	if( key>2020 ){ Usage(progname); return 0;}
+	if( key>2023 ){ Usage(progname); return 0;}
 	if( key<2014 ){ Usage(progname); return 0;}
     }
     else
@@ -59,12 +59,12 @@ int main(int argc, char* argv[])
     TFile *fout=0;
     TString fnameout;
     TString KEDR;
-    TString dir_out="/spool/users/ovtin/cosmruns/results";
-    KEDR = dir_out + "/" + TString::Format("kp_identification_thick_%d_%f",key,Npethr).Data();
+    TString dir_out="/store/users/ovtin/cosmruns/results";
+    KEDR = dir_out + "/" + TString::Format("kp_identification_thick_aerReg0_new_%d_%f",key,Npethr).Data();
     gSystem->Exec("mkdir "+ KEDR);
     gSystem->Exec("cp /home/ovtin/public_html/index.php "+ KEDR);
-    gSystem->Exec("ln -s "+ KEDR + " /home/ovtin/public_html/atc_cosmic/thick_cnt/"+ TString::Format("kp_identification_thick_%d_%f",key,Npethr).Data());
-    fnameout=KEDR + "/" + TString::Format("kp_ident_thick_cosm_%d.root",key).Data();
+    gSystem->Exec("ln -s "+ KEDR + " /home/ovtin/public_html/atc_cosmic/thick_cnt_aerReg0/"+ TString::Format("kp_identification_thick_%d_%f",key,Npethr).Data());
+    fnameout=KEDR + "/" + TString::Format("kp_ident_thick_cosm_aerReg0_%d.root",key).Data();
 
     cout<<fnameout<<endl;
     fout = new TFile(fnameout,"RECREATE");
@@ -112,6 +112,9 @@ int main(int argc, char* argv[])
 	if( key==2018 ) h5[j]=new TH1F(name8,"runs",1587,26337,27924);
 	if( key==2019 ) h5[j]=new TH1F(name8,"runs",961,28059,29020);
 	if( key==2020 ) h5[j]=new TH1F(name8,"runs",513,29091,29604);
+	if( key==2021 ) h5[j]=new TH1F(name8,"runs",887,29607,30494);
+	if( key==2022 ) h5[j]=new TH1F(name8,"runs",993,30546,31539);
+	if( key==2023 ) h5[j]=new TH1F(name8,"runs",404,31561,31965);
     }
 
     float p_all[160][20];
@@ -178,6 +181,58 @@ int main(int argc, char* argv[])
         if( bcosm.run==29522 || bcosm.run==29525 || bcosm.run==29557 || bcosm.run==29558 || bcosm.run==29581 ) continue;   //2020
 	if( bcosm.run==29595 || bcosm.run==29596 || bcosm.run==29597 || bcosm.run==29598 || bcosm.run==29599 ) continue;   //2020
 	if( bcosm.run==29582 || bcosm.run==29589 || bcosm.run==29601 ) continue;                                           //2020
+	if( bcosm.run>=29980 && bcosm.run<=29995 ) continue;                                                               //2020
+	if( bcosm.run>=29845 && bcosm.run<=29860 ) continue;                                                               //2020
+	if( bcosm.run>=29950 && bcosm.run<=29955 ) continue;                                                               //2020
+
+        //skip runs with bad 1 ph.e. calibration
+        if( bcosm.run>=28301 && bcosm.run<=28474 ) continue;
+        if( bcosm.run>=28670 && bcosm.run<=28750 ) continue;
+        if( bcosm.run>=29450 && bcosm.run<=29529 ) continue;
+	if( bcosm.run>=30050 && bcosm.run<=30250 ) continue;
+
+        //2021-2022
+        if( bcosm.run==29607 || bcosm.run==29609 || bcosm.run==29612 || bcosm.run==29613 || bcosm.run==29614 || bcosm.run==29618 ) continue;
+        if( bcosm.run==29620 || bcosm.run==29624 || bcosm.run==29625 || bcosm.run==29626 || bcosm.run==29631 || bcosm.run==29632 ) continue;
+        if( bcosm.run==29633 || bcosm.run==29634 || bcosm.run==29665 || bcosm.run==29674 || bcosm.run==29675 || bcosm.run==29676 ) continue;
+        if( bcosm.run==29686 || bcosm.run==29732 || bcosm.run==29733 || bcosm.run==29748 || bcosm.run==29763 || bcosm.run==29784 ) continue;
+        if( bcosm.run==29785 || bcosm.run==29802 || bcosm.run==29805 || bcosm.run==29806 || bcosm.run==29808 || bcosm.run==29827 ) continue;
+        if( bcosm.run==29839 || bcosm.run==29840 || bcosm.run==29867 || bcosm.run==29877 || bcosm.run==29880 || bcosm.run==29881 ) continue;
+        if( bcosm.run==29885 || bcosm.run==29889 || bcosm.run==29890 || bcosm.run==29903 || bcosm.run==29905 || bcosm.run==29947 ) continue;
+        if( bcosm.run==29949 || bcosm.run==29973 || bcosm.run==29989 || bcosm.run==30064 || bcosm.run==30065 || bcosm.run==30071 ) continue;
+        if( bcosm.run==30072 || bcosm.run==30133 || bcosm.run==30134 || bcosm.run==30149 || bcosm.run==30163 || bcosm.run==30247 ) continue;
+        if( bcosm.run==30277 || bcosm.run==30284 || bcosm.run==30338 || bcosm.run==30400 || bcosm.run==30445 || bcosm.run==30452 ) continue;
+        if( bcosm.run==30453 || bcosm.run==30454 || bcosm.run==30455 || bcosm.run==30456 || bcosm.run==30462 || bcosm.run==30465 ) continue;
+        if( bcosm.run==30482 || bcosm.run==30483 || bcosm.run==30488 || bcosm.run==30489 || bcosm.run==30490 || bcosm.run==30491 ) continue;
+        if( bcosm.run==30492 || bcosm.run==30493 || bcosm.run==30494 || bcosm.run==30576 || bcosm.run==30577 || bcosm.run==30584 ) continue;
+        if( bcosm.run==30585 || bcosm.run==30610 || bcosm.run==30639 || bcosm.run==30640 || bcosm.run==30643 || bcosm.run==30644 ) continue;
+        if( bcosm.run==30693 || bcosm.run==30694 || bcosm.run==30817 || bcosm.run==30822 || bcosm.run==30823 || bcosm.run==30881 ) continue;
+        if( bcosm.run==30882 || bcosm.run==30956 || bcosm.run==30964 || bcosm.run==30997 || bcosm.run==30999 || bcosm.run==31000 ) continue;
+        if( bcosm.run==31004 || bcosm.run==31021 || bcosm.run==31028 || bcosm.run==31029 || bcosm.run==31030 || bcosm.run==31105 ) continue;
+        if( bcosm.run==31120 || bcosm.run==31145 || bcosm.run==31149 || bcosm.run==31150 || bcosm.run==31152 || bcosm.run==31153 ) continue;
+        if( bcosm.run==31155 || bcosm.run==31156 || bcosm.run==31157 || bcosm.run==31158 || bcosm.run==31164 || bcosm.run==31206 ) continue;
+        if( bcosm.run==31207 || bcosm.run==31209 || bcosm.run==31210 || bcosm.run==31239 || bcosm.run==31247 || bcosm.run==31248 ) continue;
+	if( bcosm.run==31317 || bcosm.run==31324 || bcosm.run==31325 || bcosm.run==31521 || bcosm.run==31522 ) continue;
+	if( bcosm.run==30760 || bcosm.run==30819 ) continue;
+	if( bcosm.run>=30830 && bcosm.run<=30840 ) continue;
+	if( bcosm.run>=29530 && bcosm.run<=29540 ) continue;
+	if( bcosm.run>=29550 && bcosm.run<=29604 ) continue;
+	if( bcosm.run>=31478 && bcosm.run<=31522 ) continue;
+
+        //2023
+	if( bcosm.run==31561 || bcosm.run==31562 || bcosm.run==31578 || bcosm.run==31583 ) continue;   //jan23 skip
+	if( bcosm.run==31639 || bcosm.run==31641 || bcosm.run==31642 ) continue;                       //feb23cosmruns_1
+	if( bcosm.run==31646 || bcosm.run==31650 || bcosm.run==31658 ) continue;                       //feb23cosmruns_2
+	if( bcosm.run==31659 || bcosm.run==31660 || bcosm.run==31680 ) continue;                       //feb23cosmruns_3
+	if( bcosm.run==31681 || bcosm.run==31682 || bcosm.run==31686 ) continue;                       //feb23cosmruns_4
+	if( bcosm.run==31693 || bcosm.run==31697 || bcosm.run==31698 ) continue;                       //march23cosmruns_1
+	if( bcosm.run==31699 || bcosm.run==31703 || bcosm.run==31704 ) continue;                       //march23cosmruns_2
+	if( bcosm.run==31732 || bcosm.run==31747 || bcosm.run==31748 ) continue;                       //march23cosmruns_4
+	if( bcosm.run==31749 || bcosm.run==31750 ) continue;                                           //march23cosmruns_5
+	if( bcosm.run==31793 ) continue;                                                               //march23cosmruns_6
+	if( bcosm.run==31851 || bcosm.run==31853 || bcosm.run==31854 ) continue;                       //march23cosmruns_7
+	if( bcosm.run==31855 ) continue;                                                               //march23cosmruns_8
+	if( bcosm.run==31918 ) continue;                                                               //april23cosmruns_1
 
 	if( bcosm.P>min_p && bcosm.P<max_p &&  bcosm.chi2<max_chi2 && bcosm.nhits>min_nhits && sqrt(pow(bcosm.Xip,2)+pow(bcosm.Yip,2)+pow(bcosm.Zip,2))<35 )
 	{
@@ -206,7 +261,8 @@ int main(int argc, char* argv[])
 	    {
 		if ( verbose ) cout<<"cnt"<<bcosm.cnt[i]<<"\t"<<"npe="<<bcosm.npe[i]<<endl;
 
-		if( bcosm.single_aerogel_REGION5[i]==1 && bcosm.wlshit[i]!=1 )
+		//if( bcosm.single_aerogel_REGION5[i]==1 && bcosm.wlshit[i]!=1 )
+		if( bcosm.single_aerogel_REGION0[i]==1 && bcosm.wlshit[i]!=1 )
 		{
 		    //cout<<"cnt="<<bcosm.cnt[i]<<endl;
 
@@ -367,6 +423,9 @@ int main(int argc, char* argv[])
 
     float mu_0;
     float mu_max;
+    float p_thr;
+    float p_cal;
+    float mu_cal;
     TH1F *h6 = new TH1F("N_{ph.e.}","N_{ph.e.}",20,0,20);
     TH1F *h7 = new TH1F("Barrel N_{ph.e.}","N_{ph.e.}",20,0,20);
     TH1F *h8 = new TH1F("Endcap N_{ph.e.}","N_{ph.e.}",20,0,20);
@@ -471,6 +530,7 @@ int main(int argc, char* argv[])
 	gr1[i]->SetTitle("Efficiency&Momentum");
 	gr1[i]->GetXaxis()->SetTitle("P, MeV/c");
 	gr1[i]->GetYaxis()->SetTitle("Efficiency");
+	gr1[i]->Write("gr1");
 
 	gr2[i]=new TGraphErrors(20,p_all[i],eff_p[i],err_p_all[i],err_eff_p[i]);
 	gr2[i]->SetMarkerStyle(20);
@@ -480,6 +540,7 @@ int main(int argc, char* argv[])
 	gr2[i]->SetTitle("Efficiency&Momentum");
 	gr2[i]->GetXaxis()->SetTitle("P, MeV/c");
 	gr2[i]->GetYaxis()->SetTitle("Efficiency");
+	gr2[i]->Write("gr2");
 
 	gr3[i]=new TGraphErrors(20,p_all[i],eff_k[i],err_p_all[i],err_eff_k[i]);
 	gr3[i]->SetMarkerStyle(20);
@@ -489,6 +550,7 @@ int main(int argc, char* argv[])
 	gr3[i]->SetTitle("Efficiency&Momentum");
 	gr3[i]->GetXaxis()->SetTitle("P, MeV/c");
 	gr3[i]->GetYaxis()->SetTitle("Efficiency");
+	gr3[i]->Write("gr3");
 
 	mg1[i]->SetMaximum(1.2);
 	mg1[i]->SetMinimum(0);
@@ -501,6 +563,7 @@ int main(int argc, char* argv[])
 	mg1[i]->GetYaxis()->SetLimits(0, 1.2);
 	mg1[i]->SetMinimum(0.);
 	mg1[i]->SetMaximum(1.2);
+	mg1[i]->Write("mg1");
 	gPad->Modified(); gPad->Update();
 
 	c.cd(8);
@@ -511,12 +574,14 @@ int main(int argc, char* argv[])
 	gr4[i]->SetMarkerColor(4);
 	gr4[i]->SetLineWidth(2);
 	gr4[i]->SetLineColor(4);
+        gr4[i]->Write("gr4");
 
 	gr5[i]=new TGraphErrors(20,p_all[i],not_eff_k[i],err_p_all[i],0);
 	gr5[i]->SetMarkerStyle(20);
 	gr5[i]->SetMarkerColor(2);
 	gr5[i]->SetLineWidth(2);
 	gr5[i]->SetLineColor(2);
+        gr5[i]->Write("gr5");
 
 	mg2[i]->SetMaximum(1.2);
 	mg2[i]->SetMinimum(0);
@@ -528,6 +593,7 @@ int main(int argc, char* argv[])
 	mg2[i]->GetYaxis()->SetLimits(0., 1.2);
 	mg2[i]->SetMinimum(0.);
 	mg2[i]->SetMaximum(1.2);
+        mg2[i]->Write("mg2");
 	gPad->Modified(); gPad->Update();
 	TLine *l5=new TLine(650,0,650,1);
 	l5->SetLineColor(kRed);
@@ -555,7 +621,8 @@ int main(int argc, char* argv[])
 	h5[i]->Draw();
 
 	c.Update();
-	c.Print(KEDR + "/" + TString::Format("cnt_%d.png",i).Data());
+	//c.Print(KEDR + "/" + TString::Format("cnt_%d.png",i).Data());
+	c.SaveAs(KEDR + "/" + TString::Format("cnt_%d.png",i).Data());
 
 	for(int ii=5; ii<=16; ii++)
 	{
@@ -564,16 +631,20 @@ int main(int argc, char* argv[])
 	    of.close();
 	}
 
-	mu_0=myfit1[i]->GetParameter(0);
-	mu_max=myfit1[i]->GetParameter(1);
-	h6->Fill(mu_max);
+	mu_0 = myfit1[i]->GetParameter(0);
+	mu_max = myfit1[i]->GetParameter(1);
+	p_thr = myfit1[i]->GetParameter(2);
+        p_cal = 1200.;
+        mu_cal = mu_0+mu_max*((pow(p_cal,2)-pow(p_thr,2))/pow(p_cal,2));
+
+	h6->Fill(mu_cal);
 	if( i>=20 && i<60 )
 	{
-	    h7->Fill(mu_max);
+	    h7->Fill(mu_cal);
 	}
 	else
 	{
-	    h8->Fill(mu_max);
+	    h8->Fill(mu_cal);
 	}
     }
 
@@ -586,7 +657,7 @@ int main(int argc, char* argv[])
     h6->SetFillColor(kRed);
     h6->Draw();
     c1.Update();
-    c1.Print(KEDR + "/" + "Nphe.png");
+    c1.SaveAs(KEDR + "/" + "Nphe.png");
 
     TCanvas c2("c2","c2",600,600);
     c2.cd();
@@ -597,7 +668,7 @@ int main(int argc, char* argv[])
     h7->SetFillColor(kRed);
     h7->Draw();
     c2.Update();
-    c2.Print(KEDR + "/" + "Nphe_barrel.png");
+    c2.SaveAs(KEDR + "/" + "Nphe_barrel.png");
 
     TCanvas c3("c3","c3",600,600);
     c3.cd();
@@ -608,7 +679,7 @@ int main(int argc, char* argv[])
     h8->SetFillColor(kRed);
     h8->Draw();
     c3.Update();
-    c3.Print(KEDR + "/" + "Nphe_endcap.png");
+    c3.SaveAs(KEDR + "/" + "Nphe_endcap.png");
 
     fout->Write();
     fout->Close();

@@ -494,6 +494,9 @@ int main(int argc, char* argv[])
 
 	//Set subsystems to be used
         kf_use(KF_VDDC_SYSTEM|KF_TOF_SYSTEM|KF_ATC_SYSTEM|KF_EMC_SYSTEM|KF_MU_SYSTEM);
+        //kf_use(KF_VDDC_SYSTEM|KF_TOF_SYSTEM|KF_EMC_SYSTEM|KF_MU_SYSTEM);
+
+	//ksetxtversion(1);    ///!!!!!!!!!!!!!!!! 31758 run
 
 	//Register to kframework used cuts
 	char buf[100];

@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     if( argc>1 )
     {
 	key=atoi(argv[1]);
-	if( key>2020 ){ Usage(progname); return 0;}
+	if( key>2023 ){ Usage(progname); return 0;}
 	if( key<2014 ){ Usage(progname); return 0;}
     }
     else
@@ -69,12 +69,12 @@ int main(int argc, char* argv[])
     float eff_pion, eff_kaon, not_eff_pion, not_eff_kaon, Ksigma;
 
     TFile *fout=0;
-    TString dir_in="/spool/users/ovtin/cosmruns/results";
-    TString result= dir_in + "/" + TString::Format("thick_results_%d",key).Data();
+    TString dir_in="/store/users/ovtin/cosmruns/results";
+    TString result= dir_in + "/" + TString::Format("thick_results_600-1500_aerReg0_%d",key).Data();
     gSystem->Exec("mkdir "+ result);
     gSystem->Exec("cp /home/ovtin/public_html/index.php "+ result);
-    gSystem->Exec("ln -s "+ result + " /home/ovtin/public_html/atc_cosmic/thick_cnt/"+ TString::Format("thick_results_%d",key).Data());
-    TString fname = result + "/" + TString::Format("cnt_thick_misindentification_allcnt_%d.root",key).Data();
+    gSystem->Exec("ln -s "+ result + " /home/ovtin/public_html/atc_cosmic/thick_cnt_aerReg0/"+ TString::Format("thick_results_600-1500_%d",key).Data());
+    TString fname = result + "/" + TString::Format("cnt_thick_misindentification_allcnt_600-1500_aerReg0_%d.root",key).Data();
     fout=new TFile(fname,"RECREATE");
     cout<<fname<<endl;
 
@@ -113,9 +113,10 @@ int main(int argc, char* argv[])
 	    if(i==11) Npethr=4.0;
 	    if(i==12) Npethr=4.5;
 
-	    TString KEDR = dir_in + "/" + TString::Format("kp_identification_thick_%d_%f",key,Npethr).Data();
+	    TString KEDR = dir_in + "/" + TString::Format("kp_identification_thick_aerReg0_new_%d_%f",key,Npethr).Data();
 
-	    for (int ii=9; ii<=14; ii++)
+	    //for (int ii=9; ii<=14; ii++)
+	    for (int ii=6; ii<=15; ii++)
 	    {
 		TString fin = KEDR + "/" + TString::Format("cnt_thick_%d_npetrh%f_eff_ineff_p%d.dat",cnt,Npethr,ii).Data();
 		//cout<<fin<<endl;
@@ -145,12 +146,9 @@ int main(int argc, char* argv[])
     gROOT->SetStyle("Plain");
     gStyle->SetOptStat(0000);
 
-    TCanvas c("c","c",1200,600);
-    c.Divide(2,1);
-
+    TCanvas c1("c1","c1",900,600);
     for( int i=0; i<80; i++ )
     {
-        c.cd(1);
         gPad->SetGrid();
 	pr1[i]->SetMarkerStyle(20);
 	pr1[i]->SetMarkerColor(3);
@@ -168,14 +166,21 @@ int main(int argc, char* argv[])
 
 	pr1[i]->Draw("prof");
 	pr2[i]->Draw("same");
+	//pr1[i]->Draw("prof l");
+	//pr2[i]->Draw("prof l same");
 
 	sprintf(name1,"Cnt%d_k",i);
 	sprintf(name2,"Cnt%d_pi",i);
 	legend[i]->AddEntry(name1,"K","lep");
 	legend[i]->AddEntry(name2,"#pi ","lep");
 	legend[i]->Draw("same");
+	c1.Update();
+	c1.Print(result + "/" + TString::Format("cnt_%d_misID_npetrh.png",i).Data());
+    }
 
-        c.cd(2);
+    TCanvas c2("c2","c2",900,600);
+    for( int i=0; i<80; i++ )
+    {
         gPad->SetGrid();
     	pr3[i]->SetMarkerStyle(20);
 	pr3[i]->SetMarkerColor(4);
@@ -186,8 +191,8 @@ int main(int argc, char* argv[])
 	pr3[i]->GetYaxis()->SetTitleOffset(1.2);
 	pr3[i]->Draw("prof");
 
-        c.Update();
-	c.Print(result + "/" + TString::Format("cnt_%d.png",i).Data());
+	c2.Update();
+	c2.Print(result + "/" + TString::Format("cnt_%d_sigma_npetrh.png",i).Data());
     }
     fout->Write();
     fout->Close();

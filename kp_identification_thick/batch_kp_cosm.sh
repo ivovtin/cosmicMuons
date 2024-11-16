@@ -4,25 +4,31 @@
 #$ -S /bin/bash
 # -------------------------------------------
 # --             batch name                --
-#$ -N atccosm
+#$ -N atc
 # -------------------------------------------
 # --     What to redirect to where         --
 #$ -cwd
-#$ -o /spool/users/ovtin/$JOB_NAME.o$JOB_ID
+#$ -o /store/users/ovtin/$JOB_NAME.o$JOB_ID
 #$ -j y
+##$ -shell n
+#$ -V                 ##will pass all environment variables to the job
+##$ -e /dev/null
 # -------------------------------------------
 # --             Enviroment                --
-##$ -v PATH=$PATH:$HOME/development/lib:/home/ovtin/development/KrKRec,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/ovtin/development/lib,KDBHOST=bison-2
+#$ -v PATH=$PATH:$HOME/development/lib:/home/ovtin/development/KrKRec,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/ovtin/development/lib,KDBHOST=bison-2
+##$ -v PATH=$PATH:$HOME/release/KdRunFastMon,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/ovtin/release/lib,KDBHOST=localhost
 # -------------------------------------------
 # --             Queue list                --
-#$ -soft
-#$ -l time=24:00:00
+##$ -soft
+##$ -l time=24:00:00
 ##$ -q remote
-#$ -q extralong
+##$ -q extralong
+#$ -q day
 #$ -m beas
 #$ -M ovtin.ivan@gmail.com
 
-#$ -t 1-12
+##$ -t 1-12
+#$ -t 5-5
 
 i=${SGE_TASK_ID}
 myrand=$[1000+$i]
@@ -88,7 +94,8 @@ echo "Npethr=" "$Npethr"
 fi
 
 #start the job
-$HOME/development/cosmicMuons/kp_identification_thick/kp_cosmic 2020 $Npethr
+$HOME/development/cosmicMuons/kp_identification_thick/kp_cosmic 2023 $Npethr
+##$HOME/development/cosmicMuons/kp_identification_thick/kp_cosmic 2014 $Npethr
 
 status=$?
 if [ $status != 0 ]; then

@@ -8,24 +8,24 @@
 # -------------------------------------------
 # --     What to redirect to where         --
 #$ -cwd
-#$ -o $JOB_NAME.o$JOB_ID
+#$ -o /store/users/ovtin/$JOB_NAME.o$JOB_ID
 #$ -j y
 # -------------------------------------------
 # --             Enviroment                --
-##$ -v PATH=$PATH:$HOME/release/KdRunFastMon,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/ovtin/release/lib,KDBHOST=bison-2
-#$ -v PATH=$PATH:$HOME/release/KdRunFastMon,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/ovtin/release/lib,KDBHOST=localhost
+#$ -v PATH=$PATH:$HOME/release/KdRunFastMon,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/ovtin/release/lib,KDBHOST=bison-2
+##$ -v PATH=$PATH:$HOME/release/KdRunFastMon,LD_LIBRARY_PATH=/usr/local/root/lib/root:/home/ovtin/release/lib,KDBHOST=localhost
 # -------------------------------------------
 # --             Queue list                --
 ##$ -soft
 ##$ -l time=24:00:00
-#$ -q remote
-##$ -q extralong
+##$ -q remote
+#$ -q extralong
 ##$ -q 6h
 ##$ -q day
 #$ -m beas
 #$ -M ovtin.ivan@gmail.com
 
-#$ -t 3-10
+#$ -t 4-6
 
 i=${SGE_TASK_ID}
 myrand=$[1000+$i]
@@ -116,8 +116,8 @@ myrand=$[1000+$i]
 ##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_jun16_"$i".root"
 
 ##10 +
-inruns="/store/users/ovtin/cosmruns/oct16cosmruns_"$i
-outfile="/store/users/ovtin/cosmruns/results/cosm_runs_oct16_"$i".root"
+##inruns="/store/users/ovtin/cosmruns/oct16cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_oct16_"$i".root"
 
 ##2 +
 ##inruns="/store/users/ovtin/cosmruns/feb17cosmruns_"$i
@@ -234,6 +234,69 @@ outfile="/store/users/ovtin/cosmruns/results/cosm_runs_oct16_"$i".root"
 ##45 +
 ##inruns="/store/users/ovtin/cosmruns/oct20cosmruns_"$i
 ##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_oct20_"$i".root"
+
+###################################################################################
+
+##11
+##inruns="/store/users/ovtin/cosmruns/march21cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_march21_"$i".root"
+
+##10
+##inruns="/store/users/ovtin/cosmruns/april21cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_april21_"$i".root"
+
+##6
+##inruns="/store/users/ovtin/cosmruns/may21cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_may21_"$i".root"
+
+##3
+##inruns="/store/users/ovtin/cosmruns/jun21cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_jun21_"$i".root"
+
+##6
+##inruns="/store/users/ovtin/cosmruns/dec21cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_dec21_"$i".root"
+
+##5
+##inruns="/store/users/ovtin/cosmruns/jan22cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_jan22_"$i".root"
+
+##6
+##inruns="/store/users/ovtin/cosmruns/feb22cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_feb22_"$i".root"
+
+##7
+##inruns="/store/users/ovtin/cosmruns/march22cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_march22_"$i".root"
+
+##11
+##inruns="/store/users/ovtin/cosmruns/april22cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_april22_"$i".root"
+
+##5
+##inruns="/store/users/ovtin/cosmruns/may22cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_may22_"$i".root"
+
+##9
+##inruns="/store/users/ovtin/cosmruns/dec22cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_dec22_"$i".root"
+
+##1
+##bad ?
+##inruns="/store/users/ovtin/cosmruns/jan23cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_jan23_"$i".root"
+
+##4
+##inruns="/store/users/ovtin/cosmruns/feb23cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_feb23_"$i".root"
+
+##9
+inruns="/store/users/ovtin/cosmruns/march23cosmruns_"$i
+outfile="/store/users/ovtin/cosmruns/results/cosm_runs_march23_"$i".root"
+
+##2
+##inruns="/store/users/ovtin/cosmruns/april23cosmruns_"$i
+##outfile="/store/users/ovtin/cosmruns/results/cosm_runs_april23_"$i".root"
 
 echo "inruns=" "$inruns"
 echo "outfile=" "$outfile"

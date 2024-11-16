@@ -48,17 +48,27 @@
 	single_active_REGION[10],single_active_REGION0[10],single_active_REGION5[10],single_active_REGION20[10],
 	single_testreg[10];
 	float wlshit[10],nearwls[10],tlen[10],pathwls[10],npe[10],npen[10];
-        float Xip,Yip,Zip;
+	float rin[10], phiin[10], zin[10];        //local cylindric coordinates of track in-point
+	float rout[10], phiout[10], zout[10]; //local cylindric coordinates of track out-point
+	float rwls[10], phiwls[10], zwls[10];     //position of WLS crossing (middle plane of the counter)
+	float neighnpe[10];           //maximum amplitude of neighbouring counters
+	float Rin_gl[10], Phiin_gl[10], Zin_gl[10];       //global cylindric coordinates of track in-point
+	float Rout_gl[10], Phiout_gl[10], Zout_gl[10];     //global cylindric coordinates of track out-point
+	float Xip,Yip,Zip;
     };
     data bcosm;
 
     TChain *tt=new TChain("et");
     void chain(){
+
 	//2014
 	for(int i=1; i<=19; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jun14_%d.root",i).Data());
 	for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_oct14_%d.root",i).Data());
 	for(int i=1; i<=7; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_nov14_%d.root",i).Data());
-	for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_dec14_%d.root",i).Data());
+	///for(int i=1; i<=5; i++)  {
+        //    if(i!=3) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_dec14_%d.root",i).Data());
+        for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_dec14_%d.root",i).Data());
+	//}
 	//2015
 	for(int i=1; i<=2; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jan15_%d.root",i).Data());
 	for(int i=1; i<=4; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_feb15_%d.root",i).Data());
@@ -76,7 +86,9 @@
 	for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_march16_%d.root",i).Data());
 	for(int i=1; i<=6; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_may16_%d.root",i).Data());
 	for(int i=1; i<=4; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jun16_%d.root",i).Data());
-	for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_oct16_%d.root",i).Data());
+	for(int i=1; i<=5; i++){
+	    if(i!=4 && i!=5) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_oct16_%d.root",i).Data());
+	}
 	//2017
 	for(int i=1; i<=2; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_feb17_%d.root",i).Data());
 	for(int i=1; i<=3; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_apr17_%d.root",i).Data());
@@ -93,7 +105,10 @@
 	for(int i=1; i<=7; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_feb18_%d.root",i).Data());
 	for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_apr18_%d.root",i).Data());
 	for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_march18_%d.root",i).Data());
+	//for(int i=1; i<=6; i++){
+	//    if(i!=4) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_may18_%d.root",i).Data());
 	for(int i=1; i<=6; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_may18_%d.root",i).Data());
+	//}
 	for(int i=1; i<=3; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jun18_%d.root",i).Data());
 	for(int i=1; i<=1; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_nov18_%d.root",i).Data());
 	//2019
@@ -110,6 +125,25 @@
 	for(int i=1; i<=9; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_march20_%d.root",i).Data());
 	for(int i=1; i<=15; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_sep20_%d.root",i).Data());
 	for(int i=1; i<=45; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_oct20_%d.root",i).Data());
+	//2021
+	for(int i=1; i<=11; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_march21_%d.root",i).Data());
+	for(int i=1; i<=10; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_april21_%d.root",i).Data());
+	for(int i=1; i<=6; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_may21_%d.root",i).Data());
+	for(int i=1; i<=3; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jun21_%d.root",i).Data());
+	for(int i=1; i<=6; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_dec21_%d.root",i).Data());
+        //2022
+	for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jan22_%d.root",i).Data());
+	for(int i=1; i<=6; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_feb22_%d.root",i).Data());
+	for(int i=1; i<=7; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_march22_%d.root",i).Data());
+	for(int i=1; i<=11; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_april22_%d.root",i).Data());
+	for(int i=1; i<=5; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_may22_%d.root",i).Data());
+	//for(int i=1; i<=9; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_dec22_%d.root",i).Data());
+	//2023
+	for(int i=1; i<=1; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_jan23_%d.root",i).Data());
+	for(int i=1; i<=4; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_feb23_%d.root",i).Data());
+	for(int i=1; i<=9; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_march23_%d.root",i).Data());
+	for(int i=1; i<=2; i++) tt->Add(TString::Format("/spool/users/ovtin/cosmruns/results/cosm_runs_april23_%d.root",i).Data());
+
     }
 
     void setbranchstatus(){
